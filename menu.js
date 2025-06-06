@@ -6,6 +6,7 @@
     const newGameBtn = document.getElementById('newGameBtn');
     const loadGameBtn = document.getElementById('loadGameBtn');
     const backBtn = document.getElementById('backBtn');
+    const quitBtn = document.getElementById('quitBtn');
 
     const locationNames = {
         'cella_prigioniero': 'Cella del Prigioniero',
@@ -40,6 +41,9 @@
 
             const key = `adventureGameSave_${slot}`;
             const saveData = localStorage.getItem(key);
+            if (saveData) {
+                wrapper.classList.add('occupied');
+            }
             let summary = 'Vuoto';
             if (saveData) {
                 try {
@@ -76,4 +80,7 @@
     newGameBtn.addEventListener('click', startNewGame);
     loadGameBtn.addEventListener('click', showLoadScreen);
     backBtn.addEventListener('click', showMainMenu);
+    quitBtn.addEventListener('click', () => {
+        window.location.href = 'https://www.google.com';
+    });
 })();
