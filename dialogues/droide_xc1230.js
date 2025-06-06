@@ -1,5 +1,6 @@
 window.currentDialogueData = {
   id: 'droide_xc1230',
+  flag: 'dialogue_droide_xc1230',
   image: '',
   text: 'Droide XC-1230, controllo sicurezza: identificarsi',
   options: [
