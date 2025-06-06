@@ -232,13 +232,27 @@
   // Gestione per i pulsanti di movimento (azioni immediate o cambio location)
   async function onMovementClick(evt) {
     const buttonId = evt.currentTarget.id;
-    
+
     // Se non abbiamo dati di gioco, non possiamo muoverci
     if (!isGameReady()) {
       showStatus("⚠️ Dati di gioco non disponibili per il movimento", true);
       return;
     }
-    
+
+    // Gestione speciale per "ESCI" dalla cella
+    if (buttonId === 'esci' && window.GameState) {
+      if (window.GameState.hasFlag('porta_aperta')) {
+        if (window.LocationManager && window.LocationManager.currentLocationId) {
+          await window.LocationManager.executeMovement('ESCAPE_DOOR');
+        } else if (window.gameData.movements && window.gameData.movements.ESCAPE_DOOR) {
+          showStatus(window.gameData.movements.ESCAPE_DOOR);
+        } else {
+          showStatus('Esci dalla cella.');
+        }
+        return;
+      }
+    }
+
     let response = '';
     
     // Se esiste il LocationManager, prova prima il movimento tra location
