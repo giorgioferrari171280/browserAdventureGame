@@ -8,8 +8,8 @@
 </head>
 <body>
     <div id="mainMenu" class="menu-container">
-        <h1>Adventure Game</h1>
         <div class="menu-buttons">
+            <h1>Adventure Game</h1>
             <button id="newGameBtn">Nuova Partita</button>
             <button id="loadGameBtn">Carica Partita</button>
             <button id="optionsBtn">Opzioni</button>
@@ -19,9 +19,11 @@
     </div>
 
     <div id="loadScreen" class="menu-container" style="display:none;">
-        <h1>Carica Partita</h1>
-        <div id="slotGrid" class="slot-grid"></div>
-        <button id="backBtn">Indietro</button>
+        <div class="menu-buttons">
+            <h1>Carica Partita</h1>
+            <div id="slotGrid" class="slot-grid"></div>
+            <button id="backBtn">Indietro</button>
+        </div>
     </div>
 
     <script src="menu.js"></script>
