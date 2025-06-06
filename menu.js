@@ -7,6 +7,7 @@
     const saveNameInput = document.getElementById('saveNameInput');
     const createGameBtn = document.getElementById('createGameBtn');
     const cancelNewGameBtn = document.getElementById('cancelNewGameBtn');
+    const transitionOverlay = document.getElementById('transitionOverlay');
 
     const newGameBtn = document.getElementById('newGameBtn');
     const loadGameBtn = document.getElementById('loadGameBtn');
@@ -52,6 +53,16 @@
             info.textContent = saveData ? 'Occupato' : 'Vuoto';
             wrapper.appendChild(info);
 
+            const selectBtn = document.createElement('button');
+            selectBtn.textContent = 'Seleziona';
+            selectBtn.className = 'inventory-button';
+            selectBtn.addEventListener('click', () => {
+                selectedSlot = slot;
+                Array.from(newSlotGrid.children).forEach(c => c.classList.remove('selected-slot'));
+                wrapper.classList.add('selected-slot');
+            });
+            wrapper.appendChild(selectBtn);
+
             wrapper.addEventListener('click', () => {
                 selectedSlot = slot;
                 Array.from(newSlotGrid.children).forEach(c => c.classList.remove('selected-slot'));
@@ -82,7 +93,8 @@
         localStorage.setItem('pendingSaveName', name);
         localStorage.setItem('startIntroCutscene', 'true');
         localStorage.removeItem(key);
-        window.location.href = 'game.html';
+        if (transitionOverlay) transitionOverlay.style.display = 'block';
+        setTimeout(() => { window.location.href = 'game.html'; }, 300);
     }
 
     function showMainMenu() {
@@ -129,7 +141,8 @@
             loadBtn.disabled = !saveData;
             loadBtn.addEventListener('click', () => {
                 localStorage.setItem('currentSaveSlot', slot);
-                window.location.href = 'game.html';
+                if (transitionOverlay) transitionOverlay.style.display = 'block';
+                setTimeout(() => { window.location.href = 'game.html'; }, 300);
             });
             wrapper.appendChild(loadBtn);
 

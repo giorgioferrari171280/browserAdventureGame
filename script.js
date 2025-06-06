@@ -2,6 +2,9 @@
   // Elementi DOM principali
   const MenuDestro = document.getElementById('MenuDestro');
   const MenuSinistro = document.getElementById('MenuSinistro');
+  const InventoryList = document.getElementById('InventoryList');
+  const PoiList = document.getElementById('PoiList');
+  const transitionOverlay = document.getElementById('transitionOverlay');
   const BoxTesto = document.getElementById('BoxTesto');
   const ContenutoPrincipale = document.getElementById('ContenutoPrincipale');
   const sceneImage = document.getElementById('sceneImage');
@@ -42,6 +45,14 @@ const interactionButtons = [usaButton, guardaButton, prendiButton, parlaButton,
 
   let audioEnabled = true;
   let volumeLevel = 1.0;
+
+  function showTransition() {
+    if (transitionOverlay) transitionOverlay.style.display = 'block';
+  }
+
+  function hideTransition() {
+    if (transitionOverlay) transitionOverlay.style.display = 'none';
+  }
 
   let currentVerb = null;     // Verbo selezionato (e.g. "USA", "GUARDA")
   let useFirstTarget = null;  // Primo oggetto scelto quando currentVerb === 'USA'
@@ -142,7 +153,7 @@ const interactionButtons = [usaButton, guardaButton, prendiButton, parlaButton,
       window.GameState.updateInventoryInterface();
     } else {
       // Fallback al sistema locale (se non c'è GameState)
-      MenuDestro.innerHTML = '';
+      InventoryList.innerHTML = '';
       
       if (window.gameData && window.gameData.initialInventory) {
         window.gameData.initialInventory.forEach(item => {
@@ -154,7 +165,7 @@ const interactionButtons = [usaButton, guardaButton, prendiButton, parlaButton,
 
   // Carica i punti di interesse
   function loadPointsOfInterest() {
-    MenuSinistro.innerHTML = ''; // Pulisce i POI esistenti
+    PoiList.innerHTML = ''; // Pulisce i POI esistenti
     
     window.gameData.pointsOfInterest.forEach(poi => {
       addPointOfInterest(poi);
@@ -167,12 +178,12 @@ const interactionButtons = [usaButton, guardaButton, prendiButton, parlaButton,
     button.className = 'left-button';
     button.textContent = poiName;
     button.addEventListener('click', onTargetClick);
-    MenuSinistro.appendChild(button);
+    PoiList.appendChild(button);
   }
 
   // Rimuove un punto di interesse
   function removePointOfInterest(poiName) {
-    const buttons = MenuSinistro.querySelectorAll('.left-button');
+    const buttons = PoiList.querySelectorAll('.left-button');
     buttons.forEach(btn => {
       if (btn.textContent.trim() === poiName) {
         btn.remove();
@@ -186,7 +197,7 @@ const interactionButtons = [usaButton, guardaButton, prendiButton, parlaButton,
       window.GameState.removeItem(itemName);
     } else {
       // Fallback al sistema locale
-      const buttons = MenuDestro.querySelectorAll('.inventory-button');
+      const buttons = InventoryList.querySelectorAll('.inventory-button');
       buttons.forEach(btn => {
         if (btn.textContent.trim() === itemName) {
           btn.remove();
@@ -205,7 +216,7 @@ const interactionButtons = [usaButton, guardaButton, prendiButton, parlaButton,
       newButton.className = 'inventory-button';
       newButton.textContent = itemName;
       newButton.addEventListener('click', onTargetClick);
-      MenuDestro.appendChild(newButton);
+      InventoryList.appendChild(newButton);
       updateInventoryListeners();
     }
   }
@@ -674,7 +685,8 @@ const interactionButtons = [usaButton, guardaButton, prendiButton, parlaButton,
 
   if (mainMenuButton) {
     mainMenuButton.addEventListener('click', () => {
-      window.location.href = 'index.html';
+      showTransition();
+      setTimeout(() => { window.location.href = 'index.html'; }, 300);
     });
   }
 
@@ -697,7 +709,7 @@ const interactionButtons = [usaButton, guardaButton, prendiButton, parlaButton,
 
   // Assegno i listener al popup di inventario (destra) e POI (sinistra)
   function updateInventoryListeners() {
-    const currentInventoryButtons = Array.from(MenuDestro.querySelectorAll('.inventory-button'));
+    const currentInventoryButtons = Array.from(InventoryList.querySelectorAll('.inventory-button'));
     currentInventoryButtons.forEach(btn => {
       // Rimuovi listener esistenti per evitare duplicati
       btn.removeEventListener('click', onTargetClick);
@@ -735,6 +747,7 @@ const interactionButtons = [usaButton, guardaButton, prendiButton, parlaButton,
         } else {
           await window.LocationManager.initialize();
         }
+        hideTransition();
       } catch (error) {
         console.error("❌ Errore nell'inizializzazione LocationManager:", error);
         showStatus("❌ Errore nel caricamento del sistema multi-location", true);
@@ -746,6 +759,7 @@ const interactionButtons = [usaButton, guardaButton, prendiButton, parlaButton,
       if (!success) {
         showStatus("❌ Errore nell'inizializzazione del gioco singola location", true);
       }
+      hideTransition();
     } else {
       // Nessun dato disponibile
       console.warn("⚠️ Nessun sistema di gioco disponibile");
@@ -765,6 +779,7 @@ const interactionButtons = [usaButton, guardaButton, prendiButton, parlaButton,
           <p><small>Apri la console (F12) per maggiori dettagli.</small></p>
         `;
       }
+      hideTransition();
     }
   }
 
@@ -817,7 +832,7 @@ const interactionButtons = [usaButton, guardaButton, prendiButton, parlaButton,
       if (window.GameState) {
         console.log("🎒 Inventario:", window.GameState.inventory);
       } else {
-        const items = Array.from(document.querySelectorAll('#MenuDestro .inventory-button'))
+        const items = Array.from(document.querySelectorAll('#InventoryList .inventory-button'))
                           .map(btn => btn.textContent.trim());
         console.log("🎒 Inventario attuale:", items);
       }

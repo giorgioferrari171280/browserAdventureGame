@@ -125,7 +125,7 @@ const GameState = {
     
     // ===== AGGIORNA INTERFACCIA =====
     updateInventoryInterface() {
-        const inventoryContainer = document.getElementById('MenuDestro');
+        const inventoryContainer = document.getElementById('InventoryList');
         if (!inventoryContainer) return;
         
         // Pulisce inventario
