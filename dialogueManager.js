@@ -47,7 +47,9 @@ const DialogueManager = {
                 onSelect: () => {
                     setTimeout(() => {
                         window.showDialogue(data.image || '', opt.response, [
-                            { text: 'Chiudi', onSelect: () => {} }
+                            { text: 'Chiudi', onSelect: () => {
+                                if (window.hideDialogue) window.hideDialogue();
+                            } }
                         ]);
                     }, 0);
                 }
