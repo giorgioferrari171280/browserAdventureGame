@@ -44,8 +44,9 @@
             if (saveData) {
                 try {
                     const data = JSON.parse(saveData);
-                    const locName = locationNames[data.currentLocation] || data.currentLocation || 'Sconosciuto';
-                    summary = `Posizione: ${locName}`;
+                    const locName = data.locationName || locationNames[data.currentLocation] || data.currentLocation || 'Sconosciuto';
+                    const time = data.savedAt ? new Date(data.savedAt).toLocaleString() : '';
+                    summary = `Posizione: ${locName}` + (time ? ` - ${time}` : '');
                 } catch (e) {
                     summary = 'Dati non validi';
                 }

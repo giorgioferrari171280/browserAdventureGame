@@ -11,6 +11,10 @@ const GameState = {
     currentLocation: null,
     visitedLocations: [],
 
+    // Informazioni sul salvataggio
+    savedAt: null,
+    locationName: null,
+
     // Slot di salvataggio corrente
     saveSlot: 'slot1',
 
@@ -118,8 +122,14 @@ const GameState = {
         const saveData = {
             inventory: this.inventory,
             flags: this.flags,
-            currentLocation: this.currentLocation
+            currentLocation: this.currentLocation,
+            locationName: window.LocationManager?.locationConfig?.[this.currentLocation]?.name || this.locationName || this.currentLocation,
+            savedAt: new Date().toISOString()
         };
+
+        // Aggiorna proprietà locali
+        this.savedAt = saveData.savedAt;
+        this.locationName = saveData.locationName;
         
         try {
             localStorage.setItem(this.storageKey, JSON.stringify(saveData));
@@ -136,6 +146,8 @@ const GameState = {
                 this.inventory = data.inventory || [];
                 this.flags = data.flags || {};
                 this.currentLocation = data.currentLocation || null;
+                this.locationName = data.locationName || null;
+                this.savedAt = data.savedAt || null;
                 console.log("📂 Stato caricato dal salvataggio");
                 return true;
             }
