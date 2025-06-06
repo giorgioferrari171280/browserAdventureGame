@@ -37,7 +37,10 @@ body {
   background-color: #fff;
   margin-bottom: 0; /* La spaziatura è gestita dal blocco centrale */
   box-sizing: border-box;
-  padding: 1vh; /* Padding interno per contenere i box */
+  padding-top: 5px; /* Spazio di 5px sopra i tre box */
+  padding-bottom: 5px; /* Spazio di 5px sotto i tre box */
+  padding-left: 1vh;
+  padding-right: 1vh;
 }
 
 /* ------------------------------------------------
@@ -55,7 +58,8 @@ body {
   font-size: 1.8vh;
   line-height: 1.4;
   color: #111;
-  margin: 10px 0; /* Distanza di 10px sopra e sotto */
+  margin-top: 5px; /* Spazio di 5px dal box superiore */
+  margin-bottom: 5px; /* Spazio di 5px dal box inferiore */
 }
 
 /* ------------------------------------------------
@@ -63,7 +67,7 @@ body {
    ------------------------------------------------ */
 .box-bottom {
   position: fixed;
-  bottom: 0;
+  bottom: 5px; /* Distanza dal margine inferiore della pagina */
   left: 0;
   height: 18vh; /* Occupa il 18% dell'altezza della finestra */
   width: 100%;
