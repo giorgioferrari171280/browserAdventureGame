@@ -26,7 +26,7 @@ body {
   flex-direction: column;
   overflow-y: auto;
   overflow-x: hidden;
-  padding-bottom: 18vh;
+  padding-bottom: 16vh;
   min-height: 100vh;
   background: 
     radial-gradient(circle at 20% 80%, rgba(120, 0, 255, 0.08) 0%, transparent 50%),
@@ -43,7 +43,7 @@ body::before {
   top: 0;
   left: 0;
   width: 100%;
-  height: 100%;
+  height: calc(100% - 10px);
   background: repeating-linear-gradient(
     90deg,
     transparent,
@@ -66,13 +66,13 @@ body::before {
   border-radius: 8px;
   display: flex;
   flex-direction: column;
-  background: 
+  background:
     linear-gradient(145deg, rgba(0, 0, 0, 0.9) 0%, rgba(10, 10, 30, 0.95) 100%);
   backdrop-filter: blur(10px);
   margin-bottom: 0;
   box-sizing: border-box;
-  padding: 1vh;
-  box-shadow: 
+  padding: 5px;
+  box-shadow:
     0 0 20px rgba(0, 255, 255, 0.3),
     inset 0 1px 0 rgba(0, 255, 255, 0.2);
 }
@@ -127,7 +127,7 @@ body::before {
   position: fixed;
   bottom: 0;
   left: 0;
-  height: 18vh;
+  height: 16vh;
   width: 100%;
   border: 2px solid #00ff88;
   border-bottom: none;
@@ -171,8 +171,8 @@ body::before {
   overflow: visible;
   width: 12vw;
   min-width: 100px;
-  height: 100%;
-  margin: 1vh 0;
+  height: calc(100% - 10px);
+  margin: 0 5px;
   box-shadow: 
     0 0 15px rgba(255, 61, 113, 0.3),
     inset 0 1px 0 rgba(255, 61, 113, 0.1);
@@ -180,8 +180,8 @@ body::before {
 
 /* Box sinistro - Points of Interest */
 #MenuSinistro {
-  margin-left: 1vh;
-  margin-right: 1vh;
+  margin-left: 5px;
+  margin-right: 5px;
   overflow-y: visible;
   border-color: #64ffda;
   box-shadow: 
@@ -191,8 +191,8 @@ body::before {
 
 /* Box destro - Inventario */
 #MenuDestro {
-  margin-right: 1vh;
-  margin-left: 1vh;
+  margin-right: 5px;
+  margin-left: 5px;
   overflow-y: visible;
   background: 
     linear-gradient(145deg, rgba(0, 0, 0, 0.8) 0%, rgba(10, 0, 20, 0.9) 100%);
@@ -203,13 +203,14 @@ body::before {
 }
 
 .square {
-  height: 100%;
+  height: calc(100% - 10px);
   align-self: stretch;
+  color: #ffffff;
   width: calc(100vw - 15vw - 8vw - 8vh);
   min-width: 400px;
   border: 3px solid #ffd700;
   border-radius: 10px;
-  margin: 1vh;
+  margin: 0 5px;
   box-sizing: border-box;
   display: flex;
   align-items: center;

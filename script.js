@@ -51,7 +51,7 @@ const interactionButtons = [usaButton, guardaButton, prendiButton, parlaButton,
   function showStatus(message, isError = false) {
     if (BoxTesto) {
       BoxTesto.textContent = message;
-      BoxTesto.style.color = isError ? '#cc3333' : '#111';
+      BoxTesto.style.color = isError ? '#cc3333' : '#ffffff';
     }
     console.log(isError ? `❌ ${message}` : `ℹ️ ${message}`);
   }
