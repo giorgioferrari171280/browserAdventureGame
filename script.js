@@ -777,7 +777,7 @@ const interactionButtons = [usaButton, guardaButton, prendiButton, parlaButton,
   window.gameInterface = {
     initializeGame: initializeGame,
     loadScene: loadScene,
-    loadInventory: loadInventory, 
+    loadInventory: loadInventory,
     loadPointsOfInterest: loadPointsOfInterest,
     addToInventory: addToInventory,
     removeFromInventory: removeFromInventory,
@@ -794,6 +794,10 @@ const interactionButtons = [usaButton, guardaButton, prendiButton, parlaButton,
     applyEffect: applyEffect,
     isGameReady: isGameReady
   };
+
+  // Rendi accessibili le funzioni di dialogo al gestore dei dialoghi
+  window.showDialogue = showDialogue;
+  window.hideDialogue = hideDialogue;
 
   // Funzioni di utilità per debug (semplificate)
   window.gameDebug = {
