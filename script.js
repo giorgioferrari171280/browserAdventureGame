@@ -446,7 +446,11 @@ const interactionButtons = [usaButton, guardaButton, prendiButton, parlaButton,
           }
         }
 
-        showStatus(response);
+        if (typeof response === 'function') {
+          response();
+        } else {
+          showStatus(response);
+        }
         resetVerbState();
         return;
       }
@@ -475,7 +479,11 @@ const interactionButtons = [usaButton, guardaButton, prendiButton, parlaButton,
       }
     }
     
-    showStatus(response);
+    if (typeof response === 'function') {
+      response();
+    } else {
+      showStatus(response);
+    }
     resetVerbState();
   }
 
