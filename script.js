@@ -8,6 +8,12 @@
   const defaultContent = document.getElementById('defaultContent');
   const actionButtons = Array.from(document.querySelectorAll('.button-group button'));
   const cancelButton = document.getElementById('cancelButton');
+
+  // Elementi per il dialogo
+  const dialogueOverlay = document.getElementById('dialogueOverlay');
+  const dialogueImage = document.getElementById('dialogueImage');
+  const dialogueText = document.getElementById('dialogueText');
+  const dialogueOptions = document.getElementById('dialogueOptions');
   
   // Pulsanti di interazione
   const usaButton = document.getElementById('usaButton');
@@ -618,6 +624,34 @@ const interactionButtons = [usaButton, guardaButton, prendiButton, parlaButton,
     BoxTesto.textContent = "🎊 Complimenti! Hai completato la sfida di fuga! 🎊";
   }
 
+  // ===== GESTIONE SCHERMATA DI DIALOGO =====
+  function showDialogue(imageSrc, text, options) {
+    if (!dialogueOverlay) return;
+    if (dialogueImage) dialogueImage.src = imageSrc || '';
+    if (dialogueText) dialogueText.textContent = text || '';
+    if (dialogueOptions) {
+      dialogueOptions.innerHTML = '';
+      (options || []).slice(0, 4).forEach(opt => {
+        const btn = document.createElement('button');
+        btn.className = 'dialogue-option-button';
+        const label = typeof opt === 'string' ? opt : opt.text;
+        btn.textContent = label || '';
+        if (typeof opt === 'object' && typeof opt.onSelect === 'function') {
+          btn.addEventListener('click', () => {
+            opt.onSelect();
+            hideDialogue();
+          });
+        }
+        dialogueOptions.appendChild(btn);
+      });
+    }
+    dialogueOverlay.style.display = 'flex';
+  }
+
+  function hideDialogue() {
+    if (dialogueOverlay) dialogueOverlay.style.display = 'none';
+  }
+
   // Assegno i listener ai pulsanti di movimento (azioni immediate)
   movementButtons.forEach(btn => {
     btn.addEventListener('click', onMovementClick);
@@ -746,6 +780,8 @@ const interactionButtons = [usaButton, guardaButton, prendiButton, parlaButton,
     onTargetClick: onTargetClick, // Per compatibilità
     showMessage: showStatus,
     showVictoryScreen: showVictoryScreen,
+    showDialogue: showDialogue,
+    hideDialogue: hideDialogue,
     resetVerbState: resetVerbState,
     applyEffect: applyEffect,
     isGameReady: isGameReady
