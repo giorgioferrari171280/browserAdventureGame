@@ -261,7 +261,7 @@ body::before {
 .left-button {
   width: 90%;
   padding: 1.2vh 0.8vh;
-  font-size: 1.6vh;
+  font-size: clamp(12px, 1.6vh, 16px);
   font-family: 'Rajdhani', monospace;
   font-weight: 600;
   cursor: pointer;
@@ -300,7 +300,7 @@ body::before {
 .inventory-button {
   width: 90%;
   padding: 1.2vh 0.8vh;
-  font-size: 1.6vh;
+  font-size: clamp(12px, 1.6vh, 16px);
   font-family: 'Rajdhani', monospace;
   font-weight: 600;
   cursor: pointer;
@@ -428,7 +428,7 @@ body::before {
 .action-panel button,
 .menu-buttons button {
   padding: 1vh 1.5vw;
-  font-size: 1.6vh;
+  font-size: clamp(12px, 1.6vh, 18px);
   font-family: 'Rajdhani', monospace;
   font-weight: 600;
   cursor: pointer;
@@ -584,7 +584,7 @@ body::before {
   color: #ffffff !important;
   width: 40px !important;
   height: 40px !important;
-  font-size: 20px !important;
+  font-size: clamp(16px, 2vh, 24px) !important;
   font-weight: 900 !important;
   line-height: 40px;
   text-align: center;
@@ -680,12 +680,12 @@ button:not(.selected):hover {
   
   .action-panel button,
   .menu-buttons button {
-    font-size: 1.4vh;
+    font-size: clamp(10px, 1.4vh, 16px);
     padding: 0.8vh 1.2vw;
   }
-  
+
   .left-button, .inventory-button {
-    font-size: 1.4vh;
+    font-size: clamp(10px, 1.4vh, 16px);
   }
 }
 
@@ -697,6 +697,12 @@ button:not(.selected):hover {
   .box-bottom {
     position: static;
   }
+}
+
+@media (max-height: 600px) {
+  .box-middle { height: 60vh; }
+  .box-text   { height: 10vh; }
+  .box-bottom { height: 14vh; }
 }
 
 /* ============================
@@ -893,7 +899,7 @@ button:not(.selected):hover {
 
 .dialogue-option-button {
   padding: 2vh 1vw;
-  font-size: 2vh;
+  font-size: clamp(14px, 2vh, 20px);
   font-family: 'Rajdhani', monospace;
   background: linear-gradient(145deg, rgba(0, 255, 100, 0.95) 0%, rgba(0, 150, 50, 0.9) 100%);
   border: 2px solid #00ff64;
