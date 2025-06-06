@@ -154,8 +154,8 @@ const LocationManager = {
             mergedInventory = []; // GameState gestirà tutto
             
             // Merge flag: location + globali dal GameState
-            Object.keys(window.GameState.flags.data).forEach(flagName => {
-                mergedFlags[flagName] = window.GameState.flags.data[flagName];
+            Object.keys(window.GameState.flags).forEach(flagName => {
+                mergedFlags[flagName] = window.GameState.flags[flagName];
             });
         } else {
             // Fallback al sistema precedente
@@ -277,8 +277,8 @@ const LocationManager = {
         if (window.GameState) {
             console.log("🔗 INTEGRAZIONE GAMESTATE ATTIVA:");
             console.log("📊 Stato GameState:", window.GameState.getDebugInfo());
-            console.log("🎒 Inventario globale:", window.GameState.globalInventory.getAll().map(item => `${item.name} (${item.quantity})`));
-            console.log("🚩 Flag globali attivi:", Object.keys(window.GameState.flags.data).filter(key => window.GameState.flags.data[key]));
+            console.log("🎒 Inventario:", window.GameState.inventory);
+            console.log("🚩 Flag attivi:", Object.keys(window.GameState.flags));
             console.log("👣 Location visitate:", window.GameState.visitedLocations);
         } else {
             console.log("⚠️ GameState non disponibile - usando sistema locale:");
