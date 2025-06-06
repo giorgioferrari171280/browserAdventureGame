@@ -647,7 +647,9 @@ const interactionButtons = [usaButton, guardaButton, prendiButton, parlaButton,
         if (typeof opt === 'object' && typeof opt.onSelect === 'function') {
           btn.addEventListener('click', () => {
             opt.onSelect();
-            hideDialogue();
+            // Rimuovi la chiusura automatica per evitare lo "stacco" tra
+            // una battuta e la successiva. Sarà il callback a decidere se
+            // chiudere il dialogo.
           });
         }
         dialogueOptions.appendChild(btn);
