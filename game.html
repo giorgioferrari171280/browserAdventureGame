@@ -79,6 +79,15 @@
     </div>
   </div>
 
+  <!-- ===== CUTSCENE OVERLAY ===== -->
+  <div id="cutsceneOverlay" class="cutscene-overlay" style="display:none;">
+    <div class="cutscene-image">
+      <img id="cutsceneImage" src="" alt="Cutscene" />
+    </div>
+    <div id="cutsceneText" class="cutscene-text"></div>
+    <button id="cutsceneContinueBtn" class="cutscene-button">CONTINUE</button>
+  </div>
+
   <!-- Database oggetti -->
   <script src="items.js"></script>
   
@@ -92,7 +101,8 @@
   
   <!-- OPZIONE 2: Gioco multi-location (commenta data.js sopra e decommenta sotto) -->
   <script src="locationManager.js"></script>
-  
+  <script src="cutsceneManager.js"></script>
+
   <script src="script.js"></script>
 </body>
 </html>
