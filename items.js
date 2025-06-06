@@ -32,7 +32,12 @@ const Items = {
         description: "Un martello da fabbro pesante e robusto.",
         image: "images/items/martello.jpg"
     },
-    
+
+    "Chiave": {
+        description: "Una semplice chiave di ferro. Potrebbe aprire qualcosa.",
+        image: "images/items/chiave.jpg"
+    },
+
     "Chiave arrugginita": {
         description: "Una vecchia chiave di ferro coperta di ruggine.",
         image: "images/items/chiave_arrugginita.jpg"
