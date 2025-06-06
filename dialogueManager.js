@@ -27,28 +27,38 @@ const DialogueManager = {
             const script = document.createElement('script');
             script.src = src;
             script.onload = resolve;
-            script.onerror = reject;
+            script.onerror = (e) => {
+                console.error(`Errore caricamento script ${src}`, e);
+                reject(new Error(`Impossibile caricare ${src}`));
+            };
             document.head.appendChild(script);
         });
     },
 
     async playDialogue(id) {
-        const data = await this.loadDialogue(id);
-        if (!window.showDialogue) return;
-        if (window.GameState && data.flag) {
-            window.GameState.setDialogueFlag(data.flag);
-        }
-        const options = (data.options || []).map(opt => ({
-            text: opt.text,
-            onSelect: () => {
-                setTimeout(() => {
-                    window.showDialogue(data.image || '', opt.response, [
-                        { text: 'Chiudi', onSelect: () => {} }
-                    ]);
-                }, 0);
+        try {
+            const data = await this.loadDialogue(id);
+            if (!window.showDialogue) return;
+            if (window.GameState && data.flag) {
+                window.GameState.setDialogueFlag(data.flag);
             }
-        }));
-        window.showDialogue(data.image || '', data.text, options);
+            const options = (data.options || []).map(opt => ({
+                text: opt.text,
+                onSelect: () => {
+                    setTimeout(() => {
+                        window.showDialogue(data.image || '', opt.response, [
+                            { text: 'Chiudi', onSelect: () => {} }
+                        ]);
+                    }, 0);
+                }
+            }));
+            window.showDialogue(data.image || '', data.text, options);
+        } catch (error) {
+            console.error('Errore caricamento dialogo:', error);
+            if (window.gameInterface && window.gameInterface.showMessage) {
+                window.gameInterface.showMessage('❌ Errore nel caricamento del dialogo.', true);
+            }
+        }
     }
 };
 
