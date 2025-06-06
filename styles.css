@@ -689,6 +689,16 @@ button:not(.selected):hover {
   }
 }
 
+/* Gestione schermi con bassa altezza */
+@media (max-height: 700px) {
+  body {
+    padding-bottom: 0;
+  }
+  .box-bottom {
+    position: static;
+  }
+}
+
 /* ============================
    SAVE SLOT GRID (Load Menu)
    ============================ */
