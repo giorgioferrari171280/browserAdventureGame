@@ -25,9 +25,17 @@
   const movementButtons = document.querySelectorAll('#movementGroup button');
   
   // Pulsanti di interazione (richiedono target)
-  const interactionButtons = [usaButton, guardaButton, prendiButton, parlaButton, 
-                             saltaButton, leggiButton, spostaButton, indossaButton, 
+const interactionButtons = [usaButton, guardaButton, prendiButton, parlaButton,
+                             saltaButton, leggiButton, spostaButton, indossaButton,
                              spingiButton, tiraButton];
+
+  // Pulsanti speciali
+  const mainMenuButton = document.getElementById('mainMenuBtn');
+  const audioToggleButton = document.getElementById('audioToggle');
+  const volumeSlider = document.getElementById('volumeSlider');
+
+  let audioEnabled = true;
+  let volumeLevel = 1.0;
 
   let currentVerb = null;     // Verbo selezionato (e.g. "USA", "GUARDA")
   let useFirstTarget = null;  // Primo oggetto scelto quando currentVerb === 'USA'
@@ -227,6 +235,28 @@
       btn.classList.remove('selected');
     });
     selectedTargets = [];
+  }
+
+  // Aggiorna volume su tutti gli elementi audio
+  function setGlobalVolume(level) {
+    const audios = document.querySelectorAll('audio');
+    audios.forEach(a => {
+      try {
+        a.volume = level;
+      } catch (e) {}
+    });
+    volumeLevel = level;
+  }
+
+  function updateAudioUI() {
+    if (!audioToggleButton || !volumeSlider) return;
+    audioToggleButton.textContent = audioEnabled ? '🔊' : '🔇';
+    volumeSlider.disabled = !audioEnabled;
+    if (audioEnabled) {
+      setGlobalVolume(volumeSlider.value / 100);
+    } else {
+      setGlobalVolume(0);
+    }
   }
 
   // Gestione per i pulsanti di movimento (azioni immediate o cambio location)
@@ -597,6 +627,29 @@
   interactionButtons.forEach(btn => {
     btn.addEventListener('click', onVerbClick);
   });
+
+  if (mainMenuButton) {
+    mainMenuButton.addEventListener('click', () => {
+      window.location.href = 'index.html';
+    });
+  }
+
+  if (audioToggleButton) {
+    audioToggleButton.addEventListener('click', () => {
+      audioEnabled = !audioEnabled;
+      updateAudioUI();
+    });
+  }
+
+  if (volumeSlider) {
+    volumeSlider.addEventListener('input', () => {
+      if (audioEnabled) {
+        setGlobalVolume(volumeSlider.value / 100);
+      }
+    });
+  }
+
+  updateAudioUI();
 
   // Assegno i listener al popup di inventario (destra) e POI (sinistra)
   function updateInventoryListeners() {

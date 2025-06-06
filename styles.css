@@ -340,3 +340,8 @@ body {
   align-items: center;
   gap: 0.5rem;
 }
+
+/* Slider volume nel gruppo comandi speciali */
+#volumeSlider {
+  width: 80px;
+}
