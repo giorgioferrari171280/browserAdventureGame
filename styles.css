@@ -24,7 +24,7 @@ html, body {
 body {
   display: flex;
   flex-direction: column;
-  overflow-y: auto;
+  overflow-y: hidden;
   overflow-x: hidden;
   padding-bottom: 16vh;
   min-height: 100vh;
