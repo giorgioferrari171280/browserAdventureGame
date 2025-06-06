@@ -18,6 +18,11 @@ window.currentLocationData = {
       if (window.DialogueManager) {
         window.DialogueManager.playDialogue('droide_xc1230');
       }
+    },
+    'PARLA_DROIDE': () => {
+      if (window.DialogueManager) {
+        window.DialogueManager.playDialogue('droide_xc1230');
+      }
     }
   },
   effects: {},

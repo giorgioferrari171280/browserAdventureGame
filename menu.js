@@ -13,6 +13,13 @@
     const backBtn = document.getElementById('backBtn');
     const quitBtn = document.getElementById('quitBtn');
 
+    const menuMusic = document.getElementById('menuMusic');
+    if (menuMusic) {
+        menuMusic.volume = 0.1;
+        menuMusic.loop = true;
+        menuMusic.play().catch(() => {});
+    }
+
     const locationNames = {
         'cella_prigioniero': 'Cella del Prigioniero',
         'corridoio_castello': 'Corridoio del Castello',
