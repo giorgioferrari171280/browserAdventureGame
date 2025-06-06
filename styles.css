@@ -723,3 +723,20 @@ button:not(.selected):hover {
     0 0 15px rgba(255, 0, 255, 0.7),
     inset 0 1px 0 rgba(255, 0, 255, 0.4);
 }
+
+.slot-entry.selected-slot {
+  border-color: #ffff00;
+  box-shadow:
+    0 0 15px rgba(255, 255, 0, 0.7),
+    inset 0 1px 0 rgba(255, 255, 0, 0.4);
+}
+
+.save-name-input {
+  padding: 1vh;
+  font-size: 2vh;
+  border: 2px solid #00ffff;
+  border-radius: 4px;
+  background: rgba(0, 0, 0, 0.8);
+  color: #ffffff;
+  margin-bottom: 2vh;
+}

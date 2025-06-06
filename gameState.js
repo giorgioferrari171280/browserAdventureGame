@@ -14,6 +14,7 @@ const GameState = {
     // Informazioni sul salvataggio
     savedAt: null,
     locationName: null,
+    saveName: '',
 
     // Slot di salvataggio corrente
     saveSlot: 'slot1',
@@ -124,7 +125,8 @@ const GameState = {
             flags: this.flags,
             currentLocation: this.currentLocation,
             locationName: window.LocationManager?.locationConfig?.[this.currentLocation]?.name || this.locationName || this.currentLocation,
-            savedAt: new Date().toISOString()
+            savedAt: new Date().toISOString(),
+            saveName: this.saveName
         };
 
         // Aggiorna proprietà locali
@@ -148,6 +150,7 @@ const GameState = {
                 this.currentLocation = data.currentLocation || null;
                 this.locationName = data.locationName || null;
                 this.savedAt = data.savedAt || null;
+                this.saveName = data.saveName || this.saveName;
                 console.log("📂 Stato caricato dal salvataggio");
                 return true;
             }
@@ -169,11 +172,18 @@ const GameState = {
         localStorage.setItem('currentSaveSlot', this.saveSlot);
 
         const loaded = this.loadFromStorage();
-        
+
+        const pendingName = localStorage.getItem('pendingSaveName');
+        if (pendingName) {
+            this.saveName = pendingName;
+            localStorage.removeItem('pendingSaveName');
+        }
+
         if (!loaded) {
             // Primo avvio: imposta stato iniziale
             console.log("🎮 Primo avvio - Impostazione stato iniziale");
             this.setupInitialGameState();
+            this.saveToStorage();
         }
         
         console.log("🎮 GameState inizializzato");

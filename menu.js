@@ -2,6 +2,11 @@
     const mainMenu = document.getElementById('mainMenu');
     const loadScreen = document.getElementById('loadScreen');
     const slotGrid = document.getElementById('slotGrid');
+    const newGameScreen = document.getElementById('newGameScreen');
+    const newSlotGrid = document.getElementById('newSlotGrid');
+    const saveNameInput = document.getElementById('saveNameInput');
+    const createGameBtn = document.getElementById('createGameBtn');
+    const cancelNewGameBtn = document.getElementById('cancelNewGameBtn');
 
     const newGameBtn = document.getElementById('newGameBtn');
     const loadGameBtn = document.getElementById('loadGameBtn');
@@ -16,16 +21,65 @@
     };
 
     const slots = Array.from({length: 9}, (_, i) => `slot${i + 1}`);
+    let selectedSlot = null;
+
+    function showNewGameScreen() {
+        newSlotGrid.innerHTML = '';
+        saveNameInput.value = '';
+        selectedSlot = null;
+        slots.forEach((slot, index) => {
+            const wrapper = document.createElement('div');
+            wrapper.className = 'slot-entry';
+
+            const label = document.createElement('div');
+            label.textContent = `Slot ${index + 1}`;
+            wrapper.appendChild(label);
+
+            const key = `adventureGameSave_${slot}`;
+            const saveData = localStorage.getItem(key);
+            if (saveData) {
+                wrapper.classList.add('occupied');
+            }
+
+            const info = document.createElement('div');
+            info.textContent = saveData ? 'Occupato' : 'Vuoto';
+            wrapper.appendChild(info);
+
+            wrapper.addEventListener('click', () => {
+                selectedSlot = slot;
+                Array.from(newSlotGrid.children).forEach(c => c.classList.remove('selected-slot'));
+                wrapper.classList.add('selected-slot');
+            });
+
+            newSlotGrid.appendChild(wrapper);
+        });
+
+        mainMenu.style.display = 'none';
+        newGameScreen.style.display = 'flex';
+    }
 
     function startNewGame() {
-        const slot = 'slot1';
-        localStorage.setItem('currentSaveSlot', slot);
-        localStorage.removeItem(`adventureGameSave_${slot}`);
+        const name = saveNameInput.value.trim();
+        if (!selectedSlot || !name) {
+            alert('Seleziona uno slot e inserisci un nome per il salvataggio.');
+            return;
+        }
+
+        const key = `adventureGameSave_${selectedSlot}`;
+        if (localStorage.getItem(key)) {
+            const overwrite = confirm('Lo slot è già occupato. Sovrascrivere?');
+            if (!overwrite) return;
+        }
+
+        localStorage.setItem('currentSaveSlot', selectedSlot);
+        localStorage.setItem('pendingSaveName', name);
+        localStorage.removeItem(key);
         window.location.href = 'game.html';
     }
 
     function showMainMenu() {
         loadScreen.style.display = 'none';
+        newGameScreen.style.display = 'none';
         mainMenu.style.display = 'flex';
     }
 
@@ -48,16 +102,17 @@
             if (saveData) {
                 try {
                     const data = JSON.parse(saveData);
+                    const name = data.saveName || `Slot ${index + 1}`;
                     const locName = data.locationName || locationNames[data.currentLocation] || data.currentLocation || 'Sconosciuto';
                     const time = data.savedAt ? new Date(data.savedAt).toLocaleString() : '';
-                    summary = `Posizione: ${locName}` + (time ? ` - ${time}` : '');
+                    summary = `${name}\nPosizione: ${locName}` + (time ? `\n${time}` : '');
                 } catch (e) {
                     summary = 'Dati non validi';
                 }
             }
 
             const info = document.createElement('div');
-            info.textContent = summary;
+            info.innerText = summary;
             wrapper.appendChild(info);
 
             const loadBtn = document.createElement('button');
@@ -74,10 +129,13 @@
         });
 
         mainMenu.style.display = 'none';
+        newGameScreen.style.display = 'none';
         loadScreen.style.display = 'flex';
     }
 
-    newGameBtn.addEventListener('click', startNewGame);
+    newGameBtn.addEventListener('click', showNewGameScreen);
+    createGameBtn.addEventListener('click', startNewGame);
+    cancelNewGameBtn.addEventListener('click', showMainMenu);
     loadGameBtn.addEventListener('click', showLoadScreen);
     backBtn.addEventListener('click', showMainMenu);
     quitBtn.addEventListener('click', () => {
