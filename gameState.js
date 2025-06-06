@@ -10,6 +10,14 @@ const GameState = {
     // Location corrente
     currentLocation: null,
     visitedLocations: [],
+
+    // Slot di salvataggio corrente
+    saveSlot: 'slot1',
+
+    // Chiave di archiviazione basata sullo slot
+    get storageKey() {
+        return `adventureGameSave_${this.saveSlot}`;
+    },
     
     // ===== INVENTARIO E FLAG INIZIALI DEL GIOCO =====
     gameInitialState: {
@@ -81,6 +89,11 @@ const GameState = {
             visitedLocations: [...this.visitedLocations]
         };
     },
+
+    setSaveSlot(slot) {
+        this.saveSlot = slot;
+        localStorage.setItem('currentSaveSlot', this.saveSlot);
+    },
     
     // ===== AGGIORNA INTERFACCIA =====
     updateInventoryInterface() {
@@ -109,7 +122,7 @@ const GameState = {
         };
         
         try {
-            localStorage.setItem('adventureGameSave', JSON.stringify(saveData));
+            localStorage.setItem(this.storageKey, JSON.stringify(saveData));
         } catch (error) {
             console.error("❌ Errore salvataggio:", error);
         }
@@ -117,7 +130,7 @@ const GameState = {
     
     loadFromStorage() {
         try {
-            const saveData = localStorage.getItem('adventureGameSave');
+            const saveData = localStorage.getItem(this.storageKey);
             if (saveData) {
                 const data = JSON.parse(saveData);
                 this.inventory = data.inventory || [];
@@ -133,7 +146,16 @@ const GameState = {
     },
     
     // ===== INIZIALIZZAZIONE =====
-    initialize() {
+    initialize(slot) {
+        if (slot) {
+            this.saveSlot = slot;
+        } else {
+            const storedSlot = localStorage.getItem('currentSaveSlot');
+            this.saveSlot = storedSlot || this.saveSlot;
+        }
+
+        localStorage.setItem('currentSaveSlot', this.saveSlot);
+
         const loaded = this.loadFromStorage();
         
         if (!loaded) {
@@ -167,7 +189,7 @@ const GameState = {
         this.inventory = [];
         this.flags = {};
         this.currentLocation = null;
-        localStorage.removeItem('adventureGameSave');
+        localStorage.removeItem(this.storageKey);
         this.updateInventoryInterface();
         
         // Riapplica stato iniziale
