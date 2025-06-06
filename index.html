@@ -9,8 +9,21 @@
 <body>
     <div id="mainMenu" class="menu-container">
         <h1>Adventure Game</h1>
-        <div id="slotContainer"></div>
+        <div class="menu-buttons">
+            <button id="newGameBtn">Nuova Partita</button>
+            <button id="loadGameBtn">Carica Partita</button>
+            <button id="optionsBtn">Opzioni</button>
+            <button id="creditsBtn">Credits</button>
+            <button id="quitBtn">Esci dal Gioco</button>
+        </div>
     </div>
+
+    <div id="loadScreen" class="menu-container" style="display:none;">
+        <h1>Carica Partita</h1>
+        <div id="slotGrid" class="slot-grid"></div>
+        <button id="backBtn">Indietro</button>
+    </div>
+
     <script src="menu.js"></script>
 </body>
 </html>
