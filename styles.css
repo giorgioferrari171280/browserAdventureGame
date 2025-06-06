@@ -19,7 +19,7 @@ body {
   overflow-y: auto; /* Scrolling verticale per tutta la pagina */
   overflow-x: hidden; /* Evita scroll orizzontale */
   /* Spazio in basso per la barra dei pulsanti fissi */
-  padding-bottom: 18vh;
+  padding-bottom: 16vh;
   /* Altezza minima pari all'altezza della finestra */
   min-height: 100vh;
 }
@@ -69,7 +69,7 @@ body {
   position: fixed;
   bottom: 5px; /* Distanza dal margine inferiore della pagina */
   left: 0;
-  height: 18vh; /* Occupa il 18% dell'altezza della finestra */
+  height: 16vh; /* Leggermente più bassa */
   width: 100%;
   border: 2px solid #000;
   display: flex;
@@ -104,7 +104,7 @@ body {
   width: 12vw;
   min-width: 100px;
   height: 100%; /* Occupa l'intera altezza del contenitore */
-  margin: 1vh 0;
+  margin: 0 1vh;
 }
 
 /* Box sinistro - normale posizionamento */
@@ -130,7 +130,7 @@ body {
   width: calc(100vw - 15vw - 8vw - 8vh);
   min-width: 400px;
   border: 2px solid #000;
-  margin: 1vh;
+  margin: 0 1vh;
   box-sizing: border-box;
   display: flex;
   align-items: center;
