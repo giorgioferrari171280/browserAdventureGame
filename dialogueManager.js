@@ -35,6 +35,9 @@ const DialogueManager = {
     async playDialogue(id) {
         const data = await this.loadDialogue(id);
         if (!window.showDialogue) return;
+        if (window.GameState && data.flag) {
+            window.GameState.setDialogueFlag(data.flag);
+        }
         const options = (data.options || []).map(opt => ({
             text: opt.text,
             onSelect: () => {

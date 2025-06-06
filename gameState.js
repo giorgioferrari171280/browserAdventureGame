@@ -6,6 +6,9 @@ const GameState = {
     
     // Flag: semplice oggetto con chiavi (presenza = true, assenza = non esiste)
     flags: {},
+
+    // Flag dei dialoghi affrontati
+    dialogueFlags: {},
     
     // Location corrente
     currentLocation: null,
@@ -32,7 +35,10 @@ const GameState = {
         // Flag iniziali del gioco (se necessari)
         startingFlags: [
             // "tutorial_completato" // Esempio: se il gioco inizia con alcuni flag già attivi
-        ]
+        ],
+
+        // Dialoghi affrontati di partenza
+        startingDialogueFlags: []
     },
     
     // ===== METODI INVENTARIO =====
@@ -77,6 +83,22 @@ const GameState = {
         this.saveToStorage();
     },
 
+    // ===== METODI FLAG DIALOGHI =====
+    setDialogueFlag(dialogueId) {
+        this.dialogueFlags[dialogueId] = true;
+        this.saveToStorage();
+        console.log(`💬 Dialogo segnato: ${dialogueId}`);
+    },
+
+    hasDialogueFlag(dialogueId) {
+        return dialogueId in this.dialogueFlags;
+    },
+
+    removeDialogueFlag(dialogueId) {
+        delete this.dialogueFlags[dialogueId];
+        this.saveToStorage();
+    },
+
     // ===== GESTIONE LOCATION =====
     setCurrentLocation(locationId) {
         this.currentLocation = locationId;
@@ -90,6 +112,7 @@ const GameState = {
         return {
             inventory: [...this.inventory],
             flags: { ...this.flags },
+            dialogueFlags: { ...this.dialogueFlags },
             currentLocation: this.currentLocation,
             visitedLocations: [...this.visitedLocations]
         };
@@ -123,6 +146,7 @@ const GameState = {
         const saveData = {
             inventory: this.inventory,
             flags: this.flags,
+            dialogueFlags: this.dialogueFlags,
             currentLocation: this.currentLocation,
             locationName: window.LocationManager?.locationConfig?.[this.currentLocation]?.name || this.locationName || this.currentLocation,
             savedAt: new Date().toISOString(),
@@ -147,6 +171,7 @@ const GameState = {
                 const data = JSON.parse(saveData);
                 this.inventory = data.inventory || [];
                 this.flags = data.flags || {};
+                this.dialogueFlags = data.dialogueFlags || {};
                 this.currentLocation = data.currentLocation || null;
                 this.locationName = data.locationName || null;
                 this.savedAt = data.savedAt || null;
@@ -189,6 +214,7 @@ const GameState = {
         console.log("🎮 GameState inizializzato");
         console.log("🎒 Inventario:", this.inventory);
         console.log("🚩 Flag:", Object.keys(this.flags));
+        console.log("💬 Dialoghi affrontati:", Object.keys(this.dialogueFlags));
     },
     
     // Imposta stato iniziale del gioco (solo al primo avvio)
@@ -198,9 +224,14 @@ const GameState = {
             this.addItem(item);
         });
         
-        // Imposta flag iniziali  
+        // Imposta flag iniziali
         this.gameInitialState.startingFlags.forEach(flag => {
             this.setFlag(flag);
+        });
+
+        // Imposta flag dialoghi iniziali
+        this.gameInitialState.startingDialogueFlags.forEach(dialogueFlag => {
+            this.setDialogueFlag(dialogueFlag);
         });
         
         console.log("✨ Stato iniziale del gioco impostato");
@@ -210,6 +241,7 @@ const GameState = {
     reset() {
         this.inventory = [];
         this.flags = {};
+        this.dialogueFlags = {};
         this.currentLocation = null;
         localStorage.removeItem(this.storageKey);
         this.updateInventoryInterface();
@@ -233,6 +265,7 @@ window.GameState = GameState;
 window.gameStateDebug = {
     showInventory: () => console.log("🎒 Inventario:", GameState.inventory),
     showFlags: () => console.log("🚩 Flag:", Object.keys(GameState.flags)),
+    showDialogueFlags: () => console.log("💬 Dialoghi:", Object.keys(GameState.dialogueFlags)),
     addItem: (name) => GameState.addItem(name),
     removeItem: (name) => GameState.removeItem(name),
     setFlag: (name) => GameState.setFlag(name),
