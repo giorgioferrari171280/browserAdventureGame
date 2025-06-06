@@ -9,6 +9,7 @@ const GameState = {
     
     // Location corrente
     currentLocation: null,
+    visitedLocations: [],
     
     // ===== INVENTARIO E FLAG INIZIALI DEL GIOCO =====
     gameInitialState: {
@@ -61,6 +62,24 @@ const GameState = {
     removeFlag(flagName) {
         delete this.flags[flagName];
         this.saveToStorage();
+    },
+
+    // ===== GESTIONE LOCATION =====
+    setCurrentLocation(locationId) {
+        this.currentLocation = locationId;
+        if (!this.visitedLocations.includes(locationId)) {
+            this.visitedLocations.push(locationId);
+        }
+        this.saveToStorage();
+    },
+
+    getDebugInfo() {
+        return {
+            inventory: [...this.inventory],
+            flags: { ...this.flags },
+            currentLocation: this.currentLocation,
+            visitedLocations: [...this.visitedLocations]
+        };
     },
     
     // ===== AGGIORNA INTERFACCIA =====
@@ -174,5 +193,8 @@ window.gameStateDebug = {
     removeItem: (name) => GameState.removeItem(name),
     setFlag: (name) => GameState.setFlag(name),
     hasFlag: (name) => console.log(`Flag ${name}:`, GameState.hasFlag(name)),
-    reset: () => GameState.reset()
+    reset: () => GameState.reset(),
+    showVisited: () => console.log("👣 Visitato:", GameState.visitedLocations),
+    setLocation: (loc) => GameState.setCurrentLocation(loc),
+    debugInfo: () => console.log(GameState.getDebugInfo())
 };
