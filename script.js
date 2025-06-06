@@ -684,7 +684,13 @@ const interactionButtons = [usaButton, guardaButton, prendiButton, parlaButton,
       // Sistema multi-location
       console.log("🗺️ Inizializzando sistema multi-location");
       try {
-        await window.LocationManager.initialize();
+        const startIntro = localStorage.getItem('startIntroCutscene');
+        if (startIntro && window.CutsceneManager) {
+          localStorage.removeItem('startIntroCutscene');
+          await window.CutsceneManager.playCutscene('intro');
+        } else {
+          await window.LocationManager.initialize();
+        }
       } catch (error) {
         console.error("❌ Errore nell'inizializzazione LocationManager:", error);
         showStatus("❌ Errore nel caricamento del sistema multi-location", true);

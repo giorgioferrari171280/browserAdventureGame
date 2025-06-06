@@ -63,12 +63,6 @@ function showCutscene(data) {
     };
 }
 
-// Avvia la cutscene introduttiva all'avvio per test
-document.addEventListener('DOMContentLoaded', () => {
-    if (CutsceneManager.cutsceneConfig['intro']) {
-        CutsceneManager.playCutscene('intro');
-    }
-});
 
 window.CutsceneManager = CutsceneManager;
 window.showCutscene = showCutscene;

@@ -73,6 +73,7 @@
 
         localStorage.setItem('currentSaveSlot', selectedSlot);
         localStorage.setItem('pendingSaveName', name);
+        localStorage.setItem('startIntroCutscene', 'true');
         localStorage.removeItem(key);
         window.location.href = 'game.html';
     }
