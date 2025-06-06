@@ -13,7 +13,8 @@
     <div class="middle-content">
       <!-- Box sinistro - punti di interesse (popolato dinamicamente) -->
       <div class="side-box" id="MenuSinistro">
-        <!-- I punti di interesse verranno caricati da data.js o location files -->
+        <h3 class="side-title">Points of interest</h3>
+        <div id="PoiList"></div>
       </div>
 
       <!-- Box quadrato centrale (ContenutoPrincipale) -->
@@ -29,18 +30,17 @@
 
       <!-- Box destro con inventario (popolato dinamicamente) -->
       <div class="side-box" id="MenuDestro">
-        <!-- L'inventario verrà caricato da GameState -->
+        <h3 class="side-title">Inventory</h3>
+        <div id="InventoryList"></div>
       </div>
     </div>
   </div>
 
-  <!-- ===== BOX PER I MESSAGGI ===== -->
-  <div class="box-text" id="BoxTesto">
-    Benvenuto! Seleziona un'azione per iniziare l'avventura.
-  </div>
-
-  <!-- ===== BOX INFERIORE FISSATO IN BASSO ===== -->
+  <!-- ===== BOX INFERIORE FLESSIBILE ===== -->
   <div class="box-bottom" id="PièDiPagina">
+    <div class="box-text" id="BoxTesto">
+      Benvenuto! Seleziona un'azione per iniziare l'avventura.
+    </div>
     <div class="action-panel">
       <!-- Gruppo Movimento (Sinistra) -->
       <div class="button-group" id="movementGroup" data-label="MOVIMENTO">
@@ -98,6 +98,8 @@
       <div id="dialogueOptions" class="dialogue-options"></div>
     </div>
   </div>
+
+  <div id="transitionOverlay" class="transition-overlay" style="display:block;"></div>
 
   <!-- Database oggetti -->
   <script src="items.js"></script>
