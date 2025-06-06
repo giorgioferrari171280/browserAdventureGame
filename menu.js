@@ -58,6 +58,7 @@
 
             const loadBtn = document.createElement('button');
             loadBtn.textContent = 'Carica';
+            loadBtn.className = 'inventory-button';
             loadBtn.disabled = !saveData;
             loadBtn.addEventListener('click', () => {
                 localStorage.setItem('currentSaveSlot', slot);
