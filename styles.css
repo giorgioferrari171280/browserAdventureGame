@@ -2,10 +2,11 @@
 html, body {
   margin: 0;
   padding: 0;
-  height: 100%;
   box-sizing: border-box;
   overflow-x: hidden;
   font-family: Arial, sans-serif;
+  /* Altezza minima per consentire lo scroll quando necessario */
+  min-height: 100%;
 }
 
 *, *::before, *::after {
@@ -18,20 +19,18 @@ body {
   overflow-y: auto; /* Scrolling verticale per tutta la pagina */
   overflow-x: hidden; /* Evita scroll orizzontale */
   /* Spazio in basso per la barra dei pulsanti fissi */
-  padding-bottom: 150px;
-  /* Imposta un'altezza minima fissa per garantire layout completo */
-  min-height: 700px;
+  padding-bottom: 18vh;
+  /* Altezza minima pari all'altezza della finestra */
+  min-height: 100vh;
 }
 
 /* ======================================================
    CONTAINER DEI TRE BOX SUPERIORI (".box-middle")
    ====================================================== */
 .box-middle {
-  position: relative; /* Cambiato da fixed a relative per scrolling */
-  top: 10px;
+  position: relative; /* Mantiene lo scrolling della pagina */
   width: 100%;
-  min-height: 500px; /* Altezza aumentata per maggiore visibilità */
-  height: auto; /* Si espande con il contenuto */
+  height: 70vh; /* Occupa il 70% dell'altezza della finestra */
   border: 2px solid #000;
   display: flex;
   flex-direction: column;
@@ -45,10 +44,9 @@ body {
    BOX PER I MESSAGGI (".box-text")
    ------------------------------------------------ */
 .box-text {
-  position: relative; /* Cambiato da fixed a relative */
+  position: relative; /* Scorre con la pagina */
   width: 100%;
-  height: 150px; /* Altezza fissa in pixel invece di vh */
-  min-height: 150px;
+  height: 12vh; /* Occupa il 12% dell'altezza della finestra */
   border: 2px solid #000;
   box-sizing: border-box;
   padding: 1vh;
@@ -67,7 +65,7 @@ body {
   position: fixed;
   bottom: 0;
   left: 0;
-  height: 140px; /* Altezza fissa in pixel invece di vh */
+  height: 18vh; /* Occupa il 18% dell'altezza della finestra */
   width: 100%;
   border: 2px solid #000;
   display: flex;
@@ -85,7 +83,7 @@ body {
   justify-content: center;
   align-items: stretch; /* Cambiato da flex-start - allinea i box */
   width: 100%;
-  min-height: 400px; /* Altezza minima più ragionevole */
+  height: 100%; /* Si adatta alla dimensione del contenitore */
   padding: 0;
   margin: 0;
 }
@@ -101,9 +99,7 @@ body {
   overflow: visible; /* Cambiato da hidden - mostra tutto il contenuto */
   width: 12vw;
   min-width: 100px;
-  /* Altezza automatica per mostrare tutto il contenuto */
-  height: auto;
-  min-height: 400px; /* Altezza minima fissa */
+  height: 100%; /* Occupa l'intera altezza del contenitore */
   margin: 1vh 0;
 }
 
@@ -124,9 +120,7 @@ body {
 
 .square {
   /* Centro allargato per riempire il resto dello spazio */
-  /* Altezza minima fissa */
-  min-height: 400px;
-  height: auto; /* Si adatta al contenuto */
+  height: 100%; /* Occupa l'intera altezza del contenitore */
   align-self: stretch; /* Si estende per allinearsi con i box laterali */
   /* Calcola lo spazio disponibile: 100% - box sinistro - box destro - margini */
   width: calc(100vw - 15vw - 8vw - 8vh);
