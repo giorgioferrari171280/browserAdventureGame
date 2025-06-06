@@ -1,0 +1,311 @@
+/* Reset margini/padding e box‐sizing */
+html, body {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  box-sizing: border-box;
+  overflow-x: hidden;
+  font-family: Arial, sans-serif;
+}
+
+*, *::before, *::after {
+  box-sizing: inherit;
+}
+
+body {
+  display: flex;
+  flex-direction: column;
+  overflow-y: auto; /* Scrolling verticale per tutta la pagina */
+  overflow-x: hidden; /* Evita scroll orizzontale */
+  /* Spazio in basso per la barra dei pulsanti fissi */
+  padding-bottom: 150px;
+  /* Imposta un'altezza minima fissa per garantire layout completo */
+  min-height: 700px;
+}
+
+/* ======================================================
+   CONTAINER DEI TRE BOX SUPERIORI (".box-middle")
+   ====================================================== */
+.box-middle {
+  position: relative; /* Cambiato da fixed a relative per scrolling */
+  top: 10px;
+  width: 100%;
+  min-height: 400px; /* Altezza minima fissa invece di calc */
+  height: auto; /* Si espande con il contenuto */
+  border: 2px solid #000;
+  display: flex;
+  flex-direction: column;
+  background-color: #fff;
+  margin-bottom: 2vh;
+  box-sizing: border-box;
+  padding: 1vh; /* Padding interno per contenere i box */
+}
+
+/* ------------------------------------------------
+   BOX PER I MESSAGGI (".box-text")
+   ------------------------------------------------ */
+.box-text {
+  position: relative; /* Cambiato da fixed a relative */
+  width: 100%;
+  height: 150px; /* Altezza fissa in pixel invece di vh */
+  min-height: 150px;
+  border: 2px solid #000;
+  box-sizing: border-box;
+  padding: 1vh;
+  overflow-y: auto; /* Mantiene scroll interno solo per i messaggi */
+  background-color: #f9f9f9;
+  font-size: 1.8vh;
+  line-height: 1.4;
+  color: #111;
+  margin-bottom: 2vh;
+}
+
+/* ------------------------------------------------
+   BARRA INFERIORE PER I PULSANTI AZIONE (".box-bottom")
+   ------------------------------------------------ */
+.box-bottom {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  height: 140px; /* Altezza fissa in pixel invece di vh */
+  width: 100%;
+  border: 2px solid #000;
+  display: flex;
+  flex-direction: column;
+  box-sizing: border-box;
+  background-color: #fff;
+}
+
+/* ============================
+   Fascia centrale (3 colonne)
+   ============================ */
+.middle-content {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: stretch; /* Cambiato da flex-start - allinea i box */
+  width: 100%;
+  min-height: 400px; /* Altezza minima più ragionevole */
+  padding: 0;
+  margin: 0;
+}
+
+.side-box {
+  border: 2px solid red;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  padding: 1vh;
+  gap: 0.3vh;
+  background-color: #fff;
+  overflow: visible; /* Cambiato da hidden - mostra tutto il contenuto */
+  width: 12vw;
+  min-width: 100px;
+  /* Altezza automatica per mostrare tutto il contenuto */
+  height: auto;
+  min-height: 400px; /* Altezza minima fissa */
+  margin: 1vh 0;
+}
+
+/* Box sinistro - normale posizionamento */
+#MenuSinistro {
+  margin-left: 1vh;
+  margin-right: 1vh;
+  overflow-y: visible; /* Cambiato da auto - mostra tutto il contenuto */
+}
+
+/* Box destro - normale posizionamento */
+#MenuDestro {
+  margin-right: 1vh;
+  margin-left: 1vh;
+  overflow-y: visible; /* Cambiato da auto - mostra tutto il contenuto */
+  background-color: #fff;
+}
+
+.square {
+  /* Centro allargato per riempire il resto dello spazio */
+  /* Altezza minima fissa */
+  min-height: 400px;
+  height: auto; /* Si adatta al contenuto */
+  align-self: stretch; /* Si estende per allinearsi con i box laterali */
+  /* Calcola lo spazio disponibile: 100% - box sinistro - box destro - margini */
+  width: calc(100vw - 15vw - 8vw - 8vh);
+  min-width: 400px;
+  border: 2px solid #000;
+  margin: 1vh;
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #fff;
+}
+
+/* ============================
+   STILE PER I PULSANTI NEL BOX SINISTRO
+   ============================ */
+.left-button {
+  width: 90%;
+  padding: 1.2vh 0.8vh;
+  font-size: 1.8vh;
+  cursor: pointer;
+  margin: 0.4vh auto;
+  background-color: #eee;
+  border: 1px solid #333;
+  transition: all 0.2s ease;
+  word-wrap: break-word;
+  text-align: center;
+  box-sizing: border-box;
+}
+
+.left-button:hover {
+  background-color: #ddd;
+  border-color: #555;
+  transform: translateX(2px);
+}
+
+/* ============================
+   STILE PER L'INVENTARIO (box destro)
+   ============================ */
+.inventory-button {
+  width: 90%;
+  padding: 1.2vh 0.8vh;
+  font-size: 1.8vh;
+  cursor: pointer;
+  margin: 0.4vh auto;
+  background-color: #eee;
+  border: 1px solid #333;
+  transition: all 0.2s ease;
+  word-wrap: break-word;
+  text-align: center;
+  box-sizing: border-box;
+}
+
+.inventory-button:hover {
+  background-color: #ddd;
+  border-color: #555;
+  transform: translateX(-1px);
+}
+
+/* ============================
+   STILE PER IL PIÈ DI PAGINA (pulsanti azione)
+   ============================ */
+.action-panel {
+  flex: 1;
+  display: flex;
+  justify-content: space-between;
+  align-items: stretch;
+  padding: 1vh;
+  gap: 1vh;
+  box-sizing: border-box;
+  background-color: #fff;
+}
+
+.button-group {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  align-content: center;
+  gap: 0.3vh;
+  padding: 0.8vh;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  background-color: #f8f8f8;
+  height: 110px; /* Altezza fissa in pixel */
+  overflow: visible;
+}
+
+/* Gruppo movimento - dimensione normale */
+#movementGroup {
+  flex: 1;
+}
+
+/* Gruppo interazioni - molto più ampio */
+#interactionGroup {
+  flex: 1.8;
+}
+
+/* Gruppo futuro - molto più stretto */
+#futureGroup {
+  flex: 0.5;
+}
+
+/* Etichette per i gruppi */
+.button-group::before {
+  content: attr(data-label);
+  position: absolute;
+  top: -1.5vh;
+  left: 50%;
+  transform: translateX(-50%);
+  background-color: #fff;
+  padding: 0 0.5vh;
+  font-size: 1.2vh;
+  color: #666;
+  font-weight: bold;
+}
+
+.button-group {
+  position: relative;
+  margin-top: 1.5vh;
+}
+
+.action-panel button {
+  padding: 1vh 1.5vw;
+  font-size: 1.8vh;
+  cursor: pointer;
+  background-color: #eee;
+  border: 1px solid #333;
+  transition: all 0.2s ease;
+  white-space: nowrap;
+  flex-shrink: 0;
+  margin: 0.2vh;
+}
+
+.action-panel button:hover {
+  background-color: #ddd;
+  border-color: #555;
+  transform: translateY(-1px);
+  box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+}
+
+/* ============================
+   Stile per pulsanti selezionati
+   ============================ */
+.action-panel button.selected {
+  background-color: #ffeb3b;
+  border: 2px solid #f57f17;
+  transform: scale(1.05);
+}
+
+/* Stile per target selezionati (POI e inventario) */
+.left-button.selected,
+.inventory-button.selected {
+  background-color: #81c784;
+  border: 2px solid #388e3c;
+  transform: scale(1.02);
+  box-shadow: 0 2px 4px rgba(0,0,0,0.3);
+}
+
+/* ============================
+   Stili specifici per il pulsante X
+   ============================ */
+#cancelButton {
+  background-color: #ffcccc !important;
+  border: 2px solid #cc3333 !important;
+  /* Forziamo forma quadrata: lato = 40px */
+  width: 40px !important;
+  height: 40px !important;
+  font-size: 24px;
+  line-height: 40px;
+  text-align: center;
+  padding: 0 !important;
+  margin: 0 5px;
+  min-width: auto !important; /* Override del min-width dei bottoni normali */
+  max-width: auto !important;
+  flex: none !important;
+}
+
+/* Quando il pulsante "X" è nascosto */
+#cancelButton.hidden {
+  display: none;
+}

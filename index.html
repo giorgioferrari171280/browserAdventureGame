@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Adventure GUI Framework</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+  <!-- ===== BOX CENTRALE (contenitore dei 3 box superiori) ===== -->
+  <div class="box-middle" id="SezioneCentrale">
+    <div class="middle-content">
+      <!-- Box sinistro - punti di interesse (popolato dinamicamente) -->
+      <div class="side-box" id="MenuSinistro">
+        <!-- I punti di interesse verranno caricati da data.js o location files -->
+      </div>
+
+      <!-- Box quadrato centrale (ContenutoPrincipale) -->
+      <div class="square" id="ContenutoPrincipale">
+        <!-- L'immagine e contenuto verranno caricati da data.js o location files -->
+        <img id="sceneImage" src="" alt="Scena di gioco" style="max-width: 100%; max-height: 100%; object-fit: contain; display: none;" />
+        <div id="defaultContent" style="padding: 2rem; text-align: center; color: #666;">
+          <h2>🎮 Adventure Game</h2>
+          <p>Caricamento in corso...</p>
+          <p><small>Se vedi questo messaggio, verifica che i file di gioco siano caricati correttamente.</small></p>
+        </div>
+      </div>
+
+      <!-- Box destro con inventario (popolato dinamicamente) -->
+      <div class="side-box" id="MenuDestro">
+        <!-- L'inventario verrà caricato da GameState -->
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== BOX PER I MESSAGGI ===== -->
+  <div class="box-text" id="BoxTesto">
+    Benvenuto! Seleziona un'azione per iniziare l'avventura.
+  </div>
+
+  <!-- ===== BOX INFERIORE FISSATO IN BASSO ===== -->
+  <div class="box-bottom" id="PièDiPagina">
+    <div class="action-panel">
+      <!-- Gruppo Movimento (Sinistra) -->
+      <div class="button-group" id="movementGroup" data-label="MOVIMENTO">
+        <button id="vaiNord">NORD</button>
+        <button id="vaiSud">SUD</button>
+        <button id="vaiEst">EST</button>
+        <button id="vaiOvest">OVEST</button>
+        <button id="sali">SALI</button>
+        <button id="scendi">SCENDI</button>
+        <button id="entra">ENTRA</button>
+        <button id="esci">ESCI</button>
+      </div>
+      
+      <!-- Gruppo Interazioni (Centro) -->
+      <div class="button-group" id="interactionGroup" data-label="INTERAZIONI">
+        <button id="prendi">PRENDI</button>
+        <button id="guarda">GUARDA</button>
+        <button id="parla">PARLA</button>
+        <button id="usaButton">USA</button>
+        <button id="salta">SALTA</button>
+        <button id="leggi">LEGGI</button>
+        <button id="sposta">SPOSTA</button>
+        <button id="indossa">INDOSSA</button>
+        <button id="spingi">SPINGI</button>
+        <button id="tira">TIRA</button>
+        <!-- Pulsante "X" speciale -->
+        <button id="cancelButton" class="hidden">X</button>
+      </div>
+      
+      <!-- Gruppo Futuro (Destra) -->
+      <div class="button-group" id="futureGroup" data-label="COMANDI SPECIALI">
+        <!-- Spazio per futuri pulsanti -->
+        <div style="color: #999; font-style: italic; text-align: center; padding: 1vh; font-size: 1.5vh;">
+          Spazio per<br>futuri comandi
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Database oggetti -->
+  <script src="items.js"></script>
+  
+  <!-- Sistema centrale di gestione stato (semplificato) -->
+  <script src="gameState.js"></script>
+  
+  <!-- MODALITÀ DI GIOCO: Scegli UNA delle opzioni sottostanti -->
+  
+  <!-- OPZIONE 1: Gioco singola location -->
+  <!-- <script src="data.js"></script> -->
+  
+  <!-- OPZIONE 2: Gioco multi-location (commenta data.js sopra e decommenta sotto) -->
+  <script src="locationManager.js"></script>
+  
+  <script src="script.js"></script>
+</body>
+</html>
