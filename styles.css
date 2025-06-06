@@ -318,9 +318,25 @@ body {
   gap: 1rem;
 }
 
-.slot-entry {
+.menu-buttons {
   display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.slot-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1rem;
+  width: 80%;
+  max-width: 600px;
+}
+
+.slot-entry {
+  border: 1px solid #333;
+  padding: 1rem;
+  display: flex;
+  flex-direction: column;
   align-items: center;
   gap: 0.5rem;
-  margin: 0.5rem 0;
 }
