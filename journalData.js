@@ -1,6 +1,9 @@
 const JournalData = {
     categories: {
-        armi: 'Armi'
+        armi: 'Armi',
+        personaggi: 'Personaggi',
+        luoghi: 'Luoghi',
+        fazioni: 'Fazioni'
     },
     entries: {
         armi: {
@@ -10,7 +13,10 @@ const JournalData = {
                 image: 'assets/images/items/hf27_laser.png',
                 description: 'Pistola dalla storia gloriosa ma ormai superata, ancora solida nonostante l\'et\u00e0.'
             }
-        }
+        },
+        personaggi: {},
+        luoghi: {},
+        fazioni: {}
     }
 };
 

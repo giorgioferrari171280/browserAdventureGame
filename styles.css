@@ -360,6 +360,7 @@ body::before {
   background:
     linear-gradient(145deg, rgba(255, 255, 0, 0.95) 0%, rgba(200, 200, 0, 0.9) 100%);
   border-color: #ffff00;
+  color: #000000;
   box-shadow:
     0 4px 20px rgba(255, 255, 0, 0.5),
     inset 0 1px 0 rgba(255, 255, 0, 0.3);
@@ -516,6 +517,7 @@ body::before {
 .menu-buttons button:hover {
   background: linear-gradient(145deg, rgba(255, 255, 0, 0.95) 0%, rgba(200, 200, 0, 0.9) 100%);
   border-color: #ffff00;
+  color: #000000;
   box-shadow:
     0 4px 20px rgba(255, 255, 0, 0.5),
     inset 0 1px 0 rgba(255, 255, 0, 0.3);
@@ -1009,6 +1011,7 @@ button:not(.selected):not(.left-button):not(.inventory-button):not(.dialogue-opt
 .dialogue-option-button:hover {
   background: linear-gradient(145deg, rgba(255, 255, 0, 0.95) 0%, rgba(200, 200, 0, 0.9) 100%);
   border-color: #ffff00;
+  color: #000000;
   box-shadow:
     0 4px 20px rgba(255, 255, 0, 0.5),
     inset 0 1px 0 rgba(255, 255, 0, 0.3);
