@@ -35,7 +35,7 @@ const LocationManager = {
             name: "Biblioteca Antica",
             connections: {
                 "sud": "corridoio_castello",
-                "sali": "torre_osservazione",
+                "sopra": "torre_osservazione",
                 "DOOR_LIBRARIAN": "studio_bibliotecario"
             }
         },
@@ -43,7 +43,7 @@ const LocationManager = {
             file: "locations/giardino_segreto.js",
             name: "Giardino Segreto",
             connections: {
-                "entra": "cella_prigioniero",
+                "dentro": "cella_prigioniero",
                 "nord": "bosco_incantato",
                 "GATE_GARDEN": "borgo_vicino"
             }
