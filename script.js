@@ -40,6 +40,7 @@ const interactionButtons = [usaButton, guardaButton, prendiButton, parlaButton,
 
   // Pulsanti speciali
   const mainMenuButton = document.getElementById('mainMenuBtn');
+  const optionsMenuButton = document.getElementById('optionsMenuBtn');
   const audioToggleButton = document.getElementById('audioToggle');
   const volumeSlider = document.getElementById('volumeSlider');
 
@@ -898,6 +899,12 @@ const interactionButtons = [usaButton, guardaButton, prendiButton, parlaButton,
     mainMenuButton.addEventListener('click', () => {
       showTransition();
       setTimeout(() => { window.location.href = 'index.html'; }, 300);
+    });
+  }
+
+  if (optionsMenuButton) {
+    optionsMenuButton.addEventListener('click', () => {
+      Modal.alert('Funzione Opzioni non implementata');
     });
   }
 
