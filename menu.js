@@ -79,25 +79,30 @@
     function startNewGame() {
         const name = saveNameInput.value.trim();
         if (!selectedSlot || !name) {
-            alert('Seleziona uno slot e inserisci un nome per il salvataggio.');
+            Modal.alert('Seleziona uno slot e inserisci un nome per il salvataggio.');
             return;
         }
 
         const key = `adventureGameSave_${selectedSlot}`;
         if (localStorage.getItem(key)) {
-            const overwrite = confirm('Lo slot è già occupato. Sovrascrivere?');
-            if (!overwrite) return;
+            Modal.confirm('Lo slot è già occupato. Sovrascrivere?').then(overwrite => {
+                if (!overwrite) return;
+                proceed();
+            });
+        } else {
+            proceed();
         }
-
-        localStorage.setItem('currentSaveSlot', selectedSlot);
-        localStorage.setItem('pendingSaveName', name);
-        localStorage.setItem('startIntroCutscene', 'true');
-        localStorage.removeItem(key);
-        if (transitionOverlay) {
-            transitionOverlay.classList.remove('fade-out');
-            transitionOverlay.style.display = 'block';
+        function proceed() {
+            localStorage.setItem('currentSaveSlot', selectedSlot);
+            localStorage.setItem('pendingSaveName', name);
+            localStorage.setItem('startIntroCutscene', 'true');
+            localStorage.removeItem(key);
+            if (transitionOverlay) {
+                transitionOverlay.classList.remove('fade-out');
+                transitionOverlay.style.display = 'block';
+            }
+            setTimeout(() => { window.location.href = 'game.html'; }, 600);
         }
-        setTimeout(() => { window.location.href = 'game.html'; }, 600);
     }
 
     function showMainMenu() {
@@ -138,9 +143,12 @@
             info.innerText = summary;
             wrapper.appendChild(info);
 
+            const actions = document.createElement('div');
+            actions.className = 'slot-actions';
+
             const loadBtn = document.createElement('button');
             loadBtn.textContent = 'Carica';
-            loadBtn.className = 'inventory-button';
+            loadBtn.className = 'inventory-button load-button';
             loadBtn.disabled = !saveData;
             loadBtn.addEventListener('click', () => {
                 localStorage.setItem('currentSaveSlot', slot);
@@ -150,7 +158,24 @@
                 }
                 setTimeout(() => { window.location.href = 'game.html'; }, 600);
             });
-            wrapper.appendChild(loadBtn);
+            actions.appendChild(loadBtn);
+
+            const deleteBtn = document.createElement('button');
+            deleteBtn.innerText = '🗑️';
+            deleteBtn.className = 'inventory-button delete-button';
+            deleteBtn.disabled = !saveData;
+            deleteBtn.addEventListener('click', () => {
+                if (!saveData) return;
+                Modal.confirm('Cancellare questo salvataggio?').then(confirmDel => {
+                    if (confirmDel) {
+                        localStorage.removeItem(key);
+                        showLoadScreen();
+                    }
+                });
+            });
+            actions.appendChild(deleteBtn);
+
+            wrapper.appendChild(actions);
 
             slotGrid.appendChild(wrapper);
         });

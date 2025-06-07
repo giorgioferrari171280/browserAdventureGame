@@ -787,6 +787,25 @@ button:not(.selected):not(.left-button):not(.inventory-button):not(.dialogue-opt
     inset 0 1px 0 rgba(255, 255, 0, 0.4);
 }
 
+.slot-actions {
+  display: flex;
+  align-items: center;
+  gap: 0.5vh;
+  width: 100%;
+}
+
+.load-button {
+  flex: 1;
+  width: auto;
+}
+
+.delete-button {
+  width: 35px;
+  height: 35px;
+  padding: 0;
+  font-size: 18px;
+}
+
 .save-name-input {
   padding: 1vh;
   font-size: 2vh;
@@ -983,6 +1002,43 @@ button:not(.selected):not(.left-button):not(.inventory-button):not(.dialogue-opt
 
 .transition-overlay.fade-out {
   opacity: 0;
+}
+
+/* ========================
+   MODAL OVERLAY
+   ======================== */
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(0, 0, 0, 0.7);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 4000;
+}
+
+.modal-window {
+  background: linear-gradient(145deg, rgba(0, 0, 0, 0.9) 0%, rgba(10, 10, 30, 0.95) 100%);
+  border: 2px solid #00ffff;
+  border-radius: 8px;
+  padding: 2vh 3vw;
+  color: #ffffff;
+  text-align: center;
+  box-shadow: 0 0 20px rgba(0, 255, 255, 0.4), inset 0 1px 0 rgba(0, 255, 255, 0.2);
+}
+
+.modal-buttons {
+  margin-top: 2vh;
+  display: flex;
+  justify-content: center;
+  gap: 2vh;
+}
+
+.modal-buttons button {
+  padding: 1vh 2vw;
 }
 
 

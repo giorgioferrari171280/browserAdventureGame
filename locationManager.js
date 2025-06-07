@@ -139,7 +139,7 @@ const LocationManager = {
             
         } catch (error) {
             console.error(`❌ Errore nel cambio location:`, error);
-            alert(`Errore nel caricamento della location: ${error.message}`);
+            Modal.alert(`Errore nel caricamento della location: ${error.message}`);
         }
     },
     
