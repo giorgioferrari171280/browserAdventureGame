@@ -133,26 +133,45 @@ const interactionButtons = [usaButton, guardaButton, prendiButton, parlaButton,
   // Carica la scena corrente
   function loadScene() {
     if (!isGameReady() || !window.gameData.locationInfo) return;
-    
+
     const locationInfo = window.gameData.locationInfo;
     if (locationInfo.image && sceneImage) {
-      sceneImage.src = locationInfo.image;
-      sceneImage.alt = locationInfo.name;
-      sceneImage.onerror = function() {
-        console.warn(`⚠️ Immagine non trovata: ${locationInfo.image}`);
-        this.style.display = 'none';
-        if (defaultContent) {
-          defaultContent.style.display = 'block';
-          defaultContent.innerHTML = `
-            <h2>🎮 ${locationInfo.name}</h2>
-            <p>${locationInfo.description}</p>
-            <p><small>Immagine: ${locationInfo.image} (non trovata)</small></p>
-          `;
+      const basePath = locationInfo.image;
+      const trySources = [];
+
+      if (/\.(png|jpg)$/i.test(basePath)) {
+        trySources.push(basePath);
+        trySources.push(basePath.endsWith('.png') ? basePath.replace(/\.png$/i, '.jpg') : basePath.replace(/\.jpg$/i, '.png'));
+      } else {
+        trySources.push(`${basePath}.png`, `${basePath}.jpg`);
+      }
+
+      let index = 0;
+      const tryLoad = () => {
+        if (index >= trySources.length) {
+          console.warn(`⚠️ Immagine non trovata: ${basePath}`);
+          sceneImage.style.display = 'none';
+          if (defaultContent) {
+            defaultContent.style.display = 'block';
+            defaultContent.innerHTML = `
+              <h2>🎮 ${locationInfo.name}</h2>
+              <p>${locationInfo.description}</p>
+              <p><small>Immagine: ${basePath} (non trovata)</small></p>
+            `;
+          }
+          return;
         }
+
+        const src = trySources[index++];
+        sceneImage.onerror = tryLoad;
+        sceneImage.onload = () => {
+          console.log(`🖼️ Immagine caricata: ${src}`);
+        };
+        sceneImage.src = src;
+        sceneImage.alt = locationInfo.name;
       };
-      sceneImage.onload = function() {
-        console.log(`🖼️ Immagine caricata: ${locationInfo.image}`);
-      };
+
+      tryLoad();
     }
   }
 
