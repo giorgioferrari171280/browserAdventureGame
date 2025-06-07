@@ -8,8 +8,10 @@ window.currentLocationData = {
   pointsOfInterest: ['Porta Nord', 'Porta Est', 'Porta Ovest', 'Droide'],
   initialInventory: [],
   movements: {
-    vaiSud: 'Ritorni alla cella del prigioniero.',
-    vaiNord: 'Procedi verso la biblioteca.',
+    sud: 'Ritorni alla cella del prigioniero.',
+    nord: 'Procedi verso la biblioteca.',
+    est: 'Un corridoio conduce alla sala delle guardie.',
+    ovest: 'La cucina si trova da questa parte.',
     default: 'Non puoi andare da quella parte.'
   },
   interactions: {

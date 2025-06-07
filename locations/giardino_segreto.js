@@ -9,6 +9,7 @@ window.currentLocationData = {
   initialInventory: [],
   movements: {
     entra: 'Rientri nella cella del prigioniero.',
+    nord: 'Un sentiero porta verso il bosco oltre il giardino.',
     default: 'Non puoi andare da quella parte.'
   },
   interactions: {},
