@@ -498,7 +498,17 @@ const interactionButtons = [usaButton, guardaButton, prendiButton, parlaButton,
 
     // Se il verbo NON è "USA", evidenzia il target e gestisci combinazioni singole
     selectTarget(targetButton);
-    
+
+    // Se l'azione è "GUARDA" e l'oggetto esiste nel database, mostra la sua descrizione
+    if (currentVerb === 'GUARDA' && typeof window.getItem === 'function') {
+      const itemData = window.getItem(targetText);
+      if (itemData && itemData.description) {
+        showStatus(itemData.description);
+        resetVerbState();
+        return;
+      }
+    }
+
     // Cerca l'interazione nell'oggetto interactions
     const interactionKey = `${currentVerb}_${targetText}`;
     let response = '';
