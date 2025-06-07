@@ -93,8 +93,11 @@
         localStorage.setItem('pendingSaveName', name);
         localStorage.setItem('startIntroCutscene', 'true');
         localStorage.removeItem(key);
-        if (transitionOverlay) transitionOverlay.style.display = 'block';
-        setTimeout(() => { window.location.href = 'game.html'; }, 300);
+        if (transitionOverlay) {
+            transitionOverlay.classList.remove('fade-out');
+            transitionOverlay.style.display = 'block';
+        }
+        setTimeout(() => { window.location.href = 'game.html'; }, 600);
     }
 
     function showMainMenu() {
@@ -141,8 +144,11 @@
             loadBtn.disabled = !saveData;
             loadBtn.addEventListener('click', () => {
                 localStorage.setItem('currentSaveSlot', slot);
-                if (transitionOverlay) transitionOverlay.style.display = 'block';
-                setTimeout(() => { window.location.href = 'game.html'; }, 300);
+                if (transitionOverlay) {
+                    transitionOverlay.classList.remove('fade-out');
+                    transitionOverlay.style.display = 'block';
+                }
+                setTimeout(() => { window.location.href = 'game.html'; }, 600);
             });
             wrapper.appendChild(loadBtn);
 
