@@ -614,7 +614,7 @@ const interactionButtons = [usaButton, guardaButton, prendiButton, parlaButton,
     switch(action) {
       case 'ESCAPE_DOOR':
         setTimeout(() => {
-          alert(escapeMessages.ESCAPE_DOOR);
+          Modal.alert(escapeMessages.ESCAPE_DOOR);
           // Se c'è LocationManager, cambia location invece di mostrare vittoria
           if (window.LocationManager) {
             window.LocationManager.executeMovement('ESCAPE_DOOR');
@@ -626,7 +626,7 @@ const interactionButtons = [usaButton, guardaButton, prendiButton, parlaButton,
         
       case 'ESCAPE_WINDOW':
         setTimeout(() => {
-          alert(escapeMessages.ESCAPE_WINDOW);
+          Modal.alert(escapeMessages.ESCAPE_WINDOW);
           if (window.LocationManager) {
             window.LocationManager.executeMovement('ESCAPE_WINDOW');
           } else {
@@ -637,7 +637,7 @@ const interactionButtons = [usaButton, guardaButton, prendiButton, parlaButton,
         
       case 'ESCAPE_TUNNEL':
         setTimeout(() => {
-          alert(escapeMessages.ESCAPE_TUNNEL);
+          Modal.alert(escapeMessages.ESCAPE_TUNNEL);
           if (window.LocationManager) {
             window.LocationManager.executeMovement('ESCAPE_TUNNEL');
           } else {
