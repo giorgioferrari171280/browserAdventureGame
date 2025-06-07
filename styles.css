@@ -657,28 +657,28 @@ body::before {
 /* Stile per target selezionati (POI e inventario) */
 .left-button.selected,
 .inventory-button.selected {
-  background: 
+  background:
     linear-gradient(145deg, rgba(0, 60, 30, 0.98) 0%, rgba(0, 100, 50, 0.95) 100%) !important;
-  border: 2px solid #4caf50 !important;
+  border: 2px solid #39ff14 !important;
   color: #ffffff !important;
-  transform: scale(1.08) !important;
+  transform: none !important;
   text-shadow: 0 0 4px rgba(129, 199, 132, 0.7) !important;
-  box-shadow: 
-    0 0 25px rgba(76, 175, 80, 0.6),
-    inset 0 2px 0 rgba(76, 175, 80, 0.3) !important;
+  box-shadow:
+    0 0 25px rgba(57, 255, 20, 0.6),
+    inset 0 2px 0 rgba(57, 255, 20, 0.3) !important;
   animation: targetSelected 1.5s ease-in-out infinite;
 }
 
 @keyframes targetSelected {
-  0%, 100% { 
-    box-shadow: 
-      0 0 25px rgba(76, 175, 80, 0.6),
-      inset 0 2px 0 rgba(76, 175, 80, 0.3);
+  0%, 100% {
+    box-shadow:
+      0 0 25px rgba(57, 255, 20, 0.6),
+      inset 0 2px 0 rgba(57, 255, 20, 0.3);
   }
-  50% { 
-    box-shadow: 
-      0 0 35px rgba(76, 175, 80, 0.8),
-      inset 0 2px 0 rgba(76, 175, 80, 0.4);
+  50% {
+    box-shadow:
+      0 0 35px rgba(57, 255, 20, 0.8),
+      inset 0 2px 0 rgba(57, 255, 20, 0.4);
   }
 }
 
