@@ -42,19 +42,22 @@ const DialogueManager = {
             if (window.GameState && data.flag) {
                 window.GameState.setDialogueFlag(data.flag);
             }
-            const options = (data.options || []).map(opt => ({
-                text: opt.text,
-                onSelect: () => {
+            const options = [];
+            (data.options || []).forEach(opt => {
+                const optionObj = { text: opt.text };
+                optionObj.onSelect = () => {
                     setTimeout(() => {
-                        window.showDialogue(data.image || '', opt.response, [
-                            { text: 'Chiudi', onSelect: () => {
-                                if (window.hideDialogue) window.hideDialogue();
-                            } }
-                        ]);
+                        window.showDialogue(data.image || '', opt.response, optionsWithClose);
                     }, 0);
-                }
-            }));
-            window.showDialogue(data.image || '', data.text, options);
+                };
+                options.push(optionObj);
+            });
+
+            const optionsWithClose = options.concat([{ text: 'Non ho altro da dirti', onSelect: () => {
+                if (window.hideDialogue) window.hideDialogue();
+            }}]);
+
+            window.showDialogue(data.image || '', data.text, optionsWithClose);
         } catch (error) {
             console.error('Errore caricamento dialogo:', error);
             if (window.gameInterface && window.gameInterface.showMessage) {

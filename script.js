@@ -50,13 +50,14 @@ const interactionButtons = [usaButton, guardaButton, prendiButton, parlaButton,
     if (transitionOverlay) {
       transitionOverlay.classList.remove('fade-out');
       transitionOverlay.style.display = 'block';
+      transitionOverlay.style.opacity = '1';
     }
   }
 
   function hideTransition() {
     if (transitionOverlay) {
       transitionOverlay.classList.add('fade-out');
-      transitionOverlay.addEventListener('animationend', () => {
+      transitionOverlay.addEventListener('transitionend', () => {
         transitionOverlay.style.display = 'none';
         transitionOverlay.classList.remove('fade-out');
       }, { once: true });
@@ -659,7 +660,7 @@ const interactionButtons = [usaButton, guardaButton, prendiButton, parlaButton,
     if (dialogueText) dialogueText.textContent = text || '';
     if (dialogueOptions) {
       dialogueOptions.innerHTML = '';
-      (options || []).slice(0, 4).forEach(opt => {
+      (options || []).slice(0, 8).forEach(opt => {
         const btn = document.createElement('button');
         btn.className = 'dialogue-option-button';
         const label = typeof opt === 'string' ? opt : opt.text;
