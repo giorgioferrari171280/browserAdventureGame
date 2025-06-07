@@ -307,8 +307,6 @@ const interactionButtons = [usaButton, guardaButton, prendiButton, parlaButton,
   function showItemView(itemData) {
     if (!itemData || !itemData.image || !sceneImage) return;
 
-    resetVerbState();
-
     isViewingItem = true;
     previousImageSrc = sceneImage.src;
     sceneImage.src = itemData.image;
@@ -333,6 +331,7 @@ const interactionButtons = [usaButton, guardaButton, prendiButton, parlaButton,
     sceneImage.style.aspectRatio = '';
     sceneImage.src = previousImageSrc || sceneImage.src;
     ContenutoPrincipale.classList.remove('item-view');
+    resetVerbState();
     loadScene();
   }
 
