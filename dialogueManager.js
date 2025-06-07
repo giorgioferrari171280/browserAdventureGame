@@ -42,22 +42,47 @@ const DialogueManager = {
             if (window.GameState && data.flag) {
                 window.GameState.setDialogueFlag(data.flag);
             }
-            const options = [];
-            (data.options || []).forEach(opt => {
-                const optionObj = { text: opt.text };
-                optionObj.onSelect = () => {
-                    setTimeout(() => {
-                        window.showDialogue(data.image || '', opt.response, optionsWithClose);
-                    }, 0);
-                };
-                options.push(optionObj);
+            const optionStates = (data.options || []).map(opt => {
+                if (opt.sequence) {
+                    return { sequence: opt.sequence, index: 0 };
+                }
+                return { sequence: [{ text: opt.text, response: opt.response }], index: 0 };
             });
 
-            const optionsWithClose = options.concat([{ text: 'Non ho altro da dirti', onSelect: () => {
-                if (window.hideDialogue) window.hideDialogue();
-            }}]);
+            function buildOptions() {
+                return optionStates.map((state, idx) => {
+                    const current = state.sequence[state.index];
+                    return {
+                        text: current.text,
+                        onSelect: () => {
+                            const pair = state.sequence[state.index];
+                            if (state.index < state.sequence.length - 1) {
+                                state.index += 1;
+                            }
+                            setTimeout(() => {
+                                window.showDialogue(
+                                    data.image || '',
+                                    pair.response,
+                                    buildOptionsWithClose()
+                                );
+                            }, 0);
+                        }
+                    };
+                });
+            }
 
-            window.showDialogue(data.image || '', data.text, optionsWithClose);
+            function buildOptionsWithClose() {
+                return buildOptions().concat([
+                    {
+                        text: 'Non ho altro da dirti',
+                        onSelect: () => {
+                            if (window.hideDialogue) window.hideDialogue();
+                        }
+                    }
+                ]);
+            }
+
+            window.showDialogue(data.image || '', data.text, buildOptionsWithClose());
         } catch (error) {
             console.error('Errore caricamento dialogo:', error);
             if (window.gameInterface && window.gameInterface.showMessage) {

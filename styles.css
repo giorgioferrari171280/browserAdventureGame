@@ -264,7 +264,7 @@ body::before {
   margin: 0 5px;
   box-sizing: border-box;
   display: flex;
-  align-items: center;
+  align-items: flex-start;
   justify-content: center;
   background: 
     radial-gradient(circle at center, rgba(0, 0, 0, 0.9) 0%, rgba(5, 5, 15, 0.95) 100%);
@@ -814,7 +814,7 @@ button:not(.selected):not(.left-button):not(.inventory-button):not(.dialogue-opt
 
 .slot-actions {
   display: flex;
-  align-items: center;
+  align-items: flex-start;
   gap: 0.5vh;
   width: 100%;
 }
@@ -882,9 +882,15 @@ button:not(.selected):not(.left-button):not(.inventory-button):not(.dialogue-opt
   object-fit: cover;
 }
 
+.cutscene-bottom {
+  display: flex;
+  align-items: center;
+  gap: 2vw;
+}
+
 .cutscene-text {
   height: 30vh;
-  width: calc(60vh * 2);
+  width: 50vw;
   max-width: 90vw;
   border: 2px solid #ff006a;
   border-radius: 6px;
@@ -900,6 +906,7 @@ button:not(.selected):not(.left-button):not(.inventory-button):not(.dialogue-opt
   text-shadow: 0 0 3px rgba(0, 255, 255, 0.3);
   font-family: 'Orbitron', monospace;
   letter-spacing: 0.5px;
+  font-size: 2.5vh;
 }
 
 .cutscene-button {
@@ -927,7 +934,7 @@ button:not(.selected):not(.left-button):not(.inventory-button):not(.dialogue-opt
   height: calc(100vh - 40px); /* leggermente più bassa per evitare sovrapposizioni */
   padding: 20px 0;
   display: flex;
-  align-items: center;
+  align-items: flex-start;
   background: rgba(0, 0, 0, 0.85);
   z-index: 2100;
 }
