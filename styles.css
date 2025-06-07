@@ -349,8 +349,8 @@ body::before {
 }
 
 .inventory-button .inventory-icon {
-  width: 40px;
-  height: 40px;
+  width: 60px;
+  height: 60px;
   object-fit: contain;
   margin: 0 auto 4px;
   vertical-align: middle;
@@ -358,13 +358,13 @@ body::before {
 
 .inventory-button:hover {
   background:
-    linear-gradient(145deg, rgba(30, 233, 164, 0.95) 0%, rgba(0, 120, 80, 0.9) 100%);
-  border-color: #1ee9a4;
+    linear-gradient(145deg, rgba(255, 255, 0, 0.95) 0%, rgba(200, 200, 0, 0.9) 100%);
+  border-color: #ffff00;
   box-shadow:
-    0 4px 20px rgba(30, 233, 164, 0.4),
-    inset 0 1px 0 rgba(30, 233, 164, 0.2);
-  text-shadow: 0 0 4px rgba(30, 233, 164, 0.6);
-  filter: hue-rotate(180deg);
+    0 4px 20px rgba(255, 255, 0, 0.5),
+    inset 0 1px 0 rgba(255, 255, 0, 0.3);
+  text-shadow: 0 0 4px rgba(255, 255, 0, 0.6);
+  filter: none;
   transform: none;
 }
 
@@ -388,6 +388,23 @@ body::before {
   box-shadow:
     0 0 25px rgba(0, 255, 136, 0.3),
     inset 0 1px 0 rgba(0, 255, 136, 0.2);
+}
+
+/* Box impostazioni sotto i pulsanti */
+.settings-panel {
+  margin-top: 5px;
+  padding-top: 5px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 1vh;
+  border: 2px solid #00ffff;
+  border-radius: 10px;
+  background:
+    linear-gradient(180deg, rgba(0, 0, 20, 0.95) 0%, rgba(0, 20, 40, 0.98) 100%);
+  box-shadow:
+    0 0 25px rgba(0, 255, 255, 0.3),
+    inset 0 1px 0 rgba(0, 255, 255, 0.2);
 }
 
 .button-group {
@@ -428,13 +445,13 @@ body::before {
     inset 0 1px 0 rgba(255, 87, 34, 0.1);
 }
 
-/* Gruppo futuro */
-#futureGroup {
+/* Gruppo missioni */
+#missionsGroup {
   flex: 0.5;
   border-color: #9c27b0;
-  background: 
+  background:
     linear-gradient(145deg, rgba(15, 0, 20, 0.7) 0%, rgba(30, 0, 40, 0.5) 100%);
-  box-shadow: 
+  box-shadow:
     0 0 20px rgba(156, 39, 176, 0.3),
     inset 0 1px 0 rgba(156, 39, 176, 0.1);
   color: #ce93d8;
@@ -548,14 +565,14 @@ body::before {
   text-shadow: 0 0 4px rgba(255, 138, 101, 0.6);
 }
 
-/* Stili specifici per i pulsanti futuro */
-#futureGroup button {
-  background: 
+/* Stili specifici per i pulsanti missioni */
+#missionsGroup button {
+  background:
     linear-gradient(145deg, rgba(20, 0, 30, 0.8) 0%, rgba(40, 0, 50, 0.6) 100%);
   border-color: #9c27b0;
   color: #ce93d8;
   text-shadow: 0 0 8px rgba(206, 147, 216, 0.6);
-  box-shadow: 
+  box-shadow:
     0 2px 10px rgba(156, 39, 176, 0.2),
     inset 0 1px 0 rgba(156, 39, 176, 0.1);
 }
@@ -983,12 +1000,12 @@ button:not(.selected):not(.left-button):not(.inventory-button):not(.dialogue-opt
 }
 
 .dialogue-option-button:hover {
-  background: linear-gradient(145deg, rgba(255, 0, 155, 0.95) 0%, rgba(150, 0, 100, 0.9) 100%);
-  border-color: #ff009b;
+  background: linear-gradient(145deg, rgba(255, 255, 0, 0.95) 0%, rgba(200, 200, 0, 0.9) 100%);
+  border-color: #ffff00;
   box-shadow:
-    0 4px 20px rgba(255, 0, 155, 0.4),
-    inset 0 1px 0 rgba(255, 0, 155, 0.2);
-  filter: hue-rotate(180deg);
+    0 4px 20px rgba(255, 255, 0, 0.5),
+    inset 0 1px 0 rgba(255, 255, 0, 0.3);
+  filter: none;
   transform: none;
 }
 
