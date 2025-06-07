@@ -3,10 +3,32 @@ window.currentLocationData = {
     id: 'cella_prigioniero',
     name: 'Cella del Prigioniero',
     description: 'Ti trovi in una piccola cella fredda e umida.',
-    image: ''
+    image: 'assets/images/locations/cella.png'
   },
-  pointsOfInterest: ['Porta', 'Pagliericcio'],
-  initialInventory: ['Cucchiaio arrugginito'],
+  pointsOfInterest: [
+    'Porta',
+    'Pagliericcio',
+    'Secchio',
+    'Finestra',
+    'Muro Nord',
+    'Muro Sud',
+    'Muro Est',
+    'Muro Ovest',
+    'Lanterna Spenta',
+    'Tavola Sconnessa'
+  ],
+  initialInventory: [
+    'Cucchiaio arrugginito',
+    'Straccio sporco',
+    'Pezzo di pane secco',
+    'Sassolino',
+    'Chiodo piegato',
+    'Lima',
+    'Corda',
+    'Candela',
+    'Lanterna',
+    'Mappa'
+  ],
   movements: {
     ESCAPE_DOOR: 'Apri con fatica la porta e ti ritrovi nel corridoio.',
     ESCAPE_TUNNEL: 'Strisci nel tunnel verso il giardino segreto.',
