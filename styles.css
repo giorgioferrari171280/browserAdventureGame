@@ -158,9 +158,13 @@ body::before {
   border-radius: 6px;
   padding: 1vh;
   overflow-y: auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   background:
     linear-gradient(135deg, rgba(0, 0, 0, 0.95) 0%, rgba(20, 0, 15, 0.98) 100%);
   backdrop-filter: blur(5px);
+  text-align: center;
   font-size: 2.2vh;
   line-height: 1.4;
   color: #ffffff;
