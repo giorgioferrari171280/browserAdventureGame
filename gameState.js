@@ -219,6 +219,19 @@ const GameState = {
     
     // Imposta stato iniziale del gioco (solo al primo avvio)
     setupInitialGameState() {
+        // Se l'inventario di partenza è vuoto, popola con 20 oggetti casuali
+        if (this.gameInitialState.startingInventory.length === 0 &&
+            typeof window.getAllItemNames === 'function') {
+            const names = window.getAllItemNames();
+            const numberToAdd = Math.min(20, names.length);
+            while (this.gameInitialState.startingInventory.length < numberToAdd) {
+                const randomName = names[Math.floor(Math.random() * names.length)];
+                if (!this.gameInitialState.startingInventory.includes(randomName)) {
+                    this.gameInitialState.startingInventory.push(randomName);
+                }
+            }
+        }
+
         // Imposta inventario iniziale
         this.gameInitialState.startingInventory.forEach(item => {
             this.addItem(item);
