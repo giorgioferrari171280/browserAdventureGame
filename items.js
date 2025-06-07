@@ -151,6 +151,10 @@ const Items = {
     "Conoscenza antica": {
         description: "Saggezza accumulata dall'antica biblioteca. Ti fa sentire più saggio.",
         image: "assets/images/items/conoscenza.jpg"
+    },
+    "Pistola Laser HF-27": {
+        description: "Un'arma datata ma ancora funzionante. Non ha molti colpi ma può servire.",
+        image: "assets/images/items/hf27_laser.png"
     }
 };
 
