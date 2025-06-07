@@ -1073,4 +1073,84 @@ button:not(.selected):not(.left-button):not(.inventory-button):not(.dialogue-opt
   padding: 1vh 2vw;
 }
 
+/* ================================
+   QUESTS / ACHIEVEMENTS / JOURNAL
+   ================================ */
+.overlay-screen {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(0, 0, 0, 0.9);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 3000;
+  overflow-y: auto;
+}
+
+.quest-window,
+.achievements-window,
+.journal-window {
+  background: linear-gradient(145deg, rgba(0, 0, 0, 0.9) 0%, rgba(10, 10, 30, 0.95) 100%);
+  border: 2px solid #00ffff;
+  border-radius: 8px;
+  padding: 2vh 2vw;
+  color: #ffffff;
+  width: 80vw;
+  max-width: 1000px;
+  max-height: 90vh;
+  overflow-y: auto;
+  box-shadow: 0 0 20px rgba(0, 255, 255, 0.4), inset 0 1px 0 rgba(0, 255, 255, 0.2);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.achievements-grid {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 1vh;
+  width: 100%;
+  margin: 2vh 0;
+}
+
+.achievement-slot {
+  border: 1px solid #00ffff;
+  padding: 1vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  min-height: 10vh;
+}
+
+.achievement-slot img {
+  width: 50px;
+  height: 50px;
+  object-fit: contain;
+  margin-bottom: 0.5vh;
+}
+
+.journal-columns {
+  display: flex;
+  width: 100%;
+  height: 60vh;
+  gap: 1vh;
+  margin-bottom: 2vh;
+}
+
+.journal-column {
+  border: 1px solid #00ffff;
+  border-radius: 4px;
+  padding: 1vh;
+  overflow-y: auto;
+}
+
+.journal-column.categories { width: 25%; }
+.journal-column.entries { width: 25%; }
+.journal-column.details { width: 50%; display: flex; flex-direction: column; }
+.journal-column.details img { max-width: 100%; height: auto; margin-bottom: 1vh; }
+.journal-text { flex: 1; overflow-y: auto; }
+
 

@@ -102,6 +102,42 @@
     </div>
   </div>
 
+  <!-- ===== QUESTS OVERLAY ===== -->
+  <div id="questsOverlay" class="overlay-screen" style="display:none;">
+    <div class="quest-window">
+      <h2>QUESTS</h2>
+      <div id="mainQuestList"></div>
+      <div id="sideQuestList"></div>
+      <button id="achievementsOpenBtn" class="inventory-button">ACHIEVEMENTS</button>
+      <button id="closeQuestsBtn" class="inventory-button">INDIETRO</button>
+    </div>
+  </div>
+
+  <!-- ===== ACHIEVEMENTS OVERLAY ===== -->
+  <div id="achievementsOverlay" class="overlay-screen" style="display:none;">
+    <div class="achievements-window">
+      <h2>ACHIEVEMENTS</h2>
+      <div id="achievementsGrid" class="achievements-grid"></div>
+      <button id="backToQuestsBtn" class="inventory-button">INDIETRO</button>
+    </div>
+  </div>
+
+  <!-- ===== JOURNAL OVERLAY ===== -->
+  <div id="journalOverlay" class="overlay-screen" style="display:none;">
+    <div class="journal-window">
+      <h2>JOURNAL</h2>
+      <div class="journal-columns">
+        <div id="journalCategories" class="journal-column categories"></div>
+        <div id="journalEntries" class="journal-column entries"></div>
+        <div id="journalDetails" class="journal-column details">
+          <div id="journalImage"></div>
+          <div id="journalText" class="journal-text"></div>
+        </div>
+      </div>
+      <button id="closeJournalBtn" class="inventory-button">INDIETRO</button>
+    </div>
+  </div>
+
   <div id="transitionOverlay" class="transition-overlay" style="display:block;"></div>
 
   <div id="modalOverlay" class="modal-overlay" style="display:none;">
@@ -117,7 +153,11 @@
   <script src="items.js"></script>
   <!-- Database personaggi -->
   <script src="npcs.js"></script>
-  
+  <!-- Database missioni e achievement -->
+  <script src="quests.js"></script>
+  <script src="achievements.js"></script>
+  <script src="journalData.js"></script>
+
   <!-- Sistema centrale di gestione stato (semplificato) -->
   <script src="gameState.js"></script>
   

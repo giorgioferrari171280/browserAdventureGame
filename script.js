@@ -43,6 +43,22 @@ const interactionButtons = [usaButton, guardaButton, prendiButton, parlaButton,
   const audioToggleButton = document.getElementById('audioToggle');
   const volumeSlider = document.getElementById('volumeSlider');
 
+  // Pulsanti missioni e journal
+  const questsBtn = document.getElementById('questsBtn');
+  const journalBtn = document.getElementById('journalBtn');
+
+  // Overlay e pannelli
+  const questsOverlay = document.getElementById('questsOverlay');
+  const achievementsOverlay = document.getElementById('achievementsOverlay');
+  const journalOverlay = document.getElementById('journalOverlay');
+  const mainQuestList = document.getElementById('mainQuestList');
+  const sideQuestList = document.getElementById('sideQuestList');
+  const achievementsGrid = document.getElementById('achievementsGrid');
+  const journalCategories = document.getElementById('journalCategories');
+  const journalEntries = document.getElementById('journalEntries');
+  const journalImage = document.getElementById('journalImage');
+  const journalText = document.getElementById('journalText');
+
   let audioEnabled = true;
   let volumeLevel = 1.0;
 
@@ -773,6 +789,101 @@ const interactionButtons = [usaButton, guardaButton, prendiButton, parlaButton,
     if (dialogueOverlay) dialogueOverlay.style.display = 'none';
   }
 
+  // ====== QUESTS & JOURNAL UI ======
+  function updateQuestOverlay() {
+    if (!mainQuestList || !sideQuestList) return;
+    mainQuestList.innerHTML = '';
+    sideQuestList.innerHTML = '';
+    const main = window.Quests?.main;
+    if (main) {
+      const title = document.createElement('h3');
+      title.textContent = main.name;
+      mainQuestList.appendChild(title);
+      const ul = document.createElement('ul');
+      main.tasks.forEach(t => {
+        const li = document.createElement('li');
+        li.textContent = (t.completed ? '[x] ' : '[ ] ') + t.description;
+        ul.appendChild(li);
+      });
+      mainQuestList.appendChild(ul);
+    }
+    (window.Quests?.sides || []).forEach(q => {
+      const wrapper = document.createElement('div');
+      const h = document.createElement('h4');
+      h.textContent = q.name;
+      wrapper.appendChild(h);
+      const ul = document.createElement('ul');
+      q.tasks.forEach(t => {
+        const li = document.createElement('li');
+        li.textContent = (t.completed ? '[x] ' : '[ ] ') + t.description;
+        ul.appendChild(li);
+      });
+      wrapper.appendChild(ul);
+      sideQuestList.appendChild(wrapper);
+    });
+  }
+
+  function updateAchievementsOverlay() {
+    if (!achievementsGrid) return;
+    achievementsGrid.innerHTML = '';
+    const ids = Object.keys(window.Achievements || {});
+    const total = 50;
+    for (let i = 0; i < total; i++) {
+      const slot = document.createElement('div');
+      slot.className = 'achievement-slot';
+      const data = window.Achievements ? window.Achievements[ids[i]] : null;
+      if (data) {
+        if (data.image) {
+          const img = document.createElement('img');
+          img.src = data.image;
+          slot.appendChild(img);
+        }
+        const d = document.createElement('div');
+        d.textContent = data.description || '';
+        slot.appendChild(d);
+      }
+      achievementsGrid.appendChild(slot);
+    }
+  }
+
+  function updateJournalOverlay() {
+    if (!journalCategories || !journalEntries) return;
+    journalCategories.innerHTML = '';
+    journalEntries.innerHTML = '';
+    journalImage.innerHTML = '';
+    journalText.textContent = '';
+    const cats = window.JournalData?.categories || {};
+    Object.keys(cats).forEach(catId => {
+      const btn = document.createElement('button');
+      btn.className = 'inventory-button';
+      btn.textContent = cats[catId];
+      btn.addEventListener('click', () => loadJournalEntries(catId));
+      journalCategories.appendChild(btn);
+    });
+  }
+
+  function loadJournalEntries(catId) {
+    journalEntries.innerHTML = '';
+    journalImage.innerHTML = '';
+    journalText.textContent = '';
+    const entries = window.JournalData?.entries[catId] || {};
+    Object.keys(entries).forEach(eid => {
+      if (!window.GameState?.hasJournalFlag(eid)) return;
+      const btn = document.createElement('button');
+      btn.className = 'inventory-button';
+      btn.textContent = entries[eid].name;
+      btn.addEventListener('click', () => showJournalEntry(catId, eid));
+      journalEntries.appendChild(btn);
+    });
+  }
+
+  function showJournalEntry(catId, eid) {
+    const entry = window.JournalData?.entries[catId]?.[eid];
+    if (!entry) return;
+    journalImage.innerHTML = entry.image ? `<img src="${entry.image}" alt="${entry.name}">` : '';
+    journalText.textContent = entry.description || '';
+  }
+
   // Assegno i listener ai pulsanti di movimento (azioni immediate)
   movementButtons.forEach(btn => {
     btn.addEventListener('click', onMovementClick);
@@ -806,6 +917,46 @@ const interactionButtons = [usaButton, guardaButton, prendiButton, parlaButton,
   }
 
   updateAudioUI();
+
+  // Listener per schermate di quests e journal
+  if (questsBtn && questsOverlay) {
+    questsBtn.addEventListener('click', () => {
+      updateQuestOverlay();
+      questsOverlay.style.display = 'flex';
+    });
+  }
+
+  const closeQuestsBtn = document.getElementById('closeQuestsBtn');
+  const achievementsOpenBtn = document.getElementById('achievementsOpenBtn');
+  const backToQuestsBtn = document.getElementById('backToQuestsBtn');
+  if (closeQuestsBtn) {
+    closeQuestsBtn.addEventListener('click', () => {
+      questsOverlay.style.display = 'none';
+    });
+  }
+  if (achievementsOpenBtn) {
+    achievementsOpenBtn.addEventListener('click', () => {
+      updateAchievementsOverlay();
+      achievementsOverlay.style.display = 'flex';
+    });
+  }
+  if (backToQuestsBtn) {
+    backToQuestsBtn.addEventListener('click', () => {
+      achievementsOverlay.style.display = 'none';
+    });
+  }
+  if (journalBtn && journalOverlay) {
+    journalBtn.addEventListener('click', () => {
+      updateJournalOverlay();
+      journalOverlay.style.display = 'flex';
+    });
+  }
+  const closeJournalBtn = document.getElementById('closeJournalBtn');
+  if (closeJournalBtn) {
+    closeJournalBtn.addEventListener('click', () => {
+      journalOverlay.style.display = 'none';
+    });
+  }
 
   // Assegno i listener al popup di inventario (destra) e POI (sinistra)
   function updateInventoryListeners() {

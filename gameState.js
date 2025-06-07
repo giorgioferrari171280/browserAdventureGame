@@ -9,6 +9,14 @@ const GameState = {
 
     // Flag dei dialoghi affrontati
     dialogueFlags: {},
+
+    // Voci del journal sbloccate
+    journalFlags: {},
+
+    // Mappatura oggetti -> flag journal
+    itemToJournalFlag: {
+        'Pistola Laser HF-27': 'weapon_hf27'
+    },
     
     // Location corrente
     currentLocation: null,
@@ -38,13 +46,20 @@ const GameState = {
         ],
 
         // Dialoghi affrontati di partenza
-        startingDialogueFlags: []
+        startingDialogueFlags: [],
+
+        // Voci di journal iniziali
+        startingJournalFlags: []
     },
     
     // ===== METODI INVENTARIO =====
     addItem(itemName) {
         if (!this.inventory.includes(itemName)) {
             this.inventory.push(itemName);
+            const jFlag = this.itemToJournalFlag[itemName];
+            if (jFlag) {
+                this.setJournalFlag(jFlag);
+            }
             this.updateInventoryInterface();
             this.saveToStorage();
             console.log(`📦 Aggiunto: ${itemName}`);
@@ -83,6 +98,22 @@ const GameState = {
         this.saveToStorage();
     },
 
+    // ===== METODI JOURNAL =====
+    setJournalFlag(flagName) {
+        this.journalFlags[flagName] = true;
+        this.saveToStorage();
+        console.log(`📖 Journal flag: ${flagName}`);
+    },
+
+    hasJournalFlag(flagName) {
+        return flagName in this.journalFlags;
+    },
+
+    removeJournalFlag(flagName) {
+        delete this.journalFlags[flagName];
+        this.saveToStorage();
+    },
+
     // ===== METODI FLAG DIALOGHI =====
     setDialogueFlag(dialogueId) {
         this.dialogueFlags[dialogueId] = true;
@@ -113,6 +144,7 @@ const GameState = {
             inventory: [...this.inventory],
             flags: { ...this.flags },
             dialogueFlags: { ...this.dialogueFlags },
+            journalFlags: { ...this.journalFlags },
             currentLocation: this.currentLocation,
             visitedLocations: [...this.visitedLocations]
         };
@@ -165,6 +197,7 @@ const GameState = {
             inventory: this.inventory,
             flags: this.flags,
             dialogueFlags: this.dialogueFlags,
+            journalFlags: this.journalFlags,
             currentLocation: this.currentLocation,
             locationName: window.LocationManager?.locationConfig?.[this.currentLocation]?.name || this.locationName || this.currentLocation,
             savedAt: new Date().toISOString(),
@@ -190,6 +223,7 @@ const GameState = {
                 this.inventory = data.inventory || [];
                 this.flags = data.flags || {};
                 this.dialogueFlags = data.dialogueFlags || {};
+                this.journalFlags = data.journalFlags || {};
                 this.currentLocation = data.currentLocation || null;
                 this.locationName = data.locationName || null;
                 this.savedAt = data.savedAt || null;
@@ -233,6 +267,7 @@ const GameState = {
         console.log("🎒 Inventario:", this.inventory);
         console.log("🚩 Flag:", Object.keys(this.flags));
         console.log("💬 Dialoghi affrontati:", Object.keys(this.dialogueFlags));
+        console.log("📖 Journal:", Object.keys(this.journalFlags));
     },
     
     // Imposta stato iniziale del gioco (solo al primo avvio)
@@ -253,6 +288,11 @@ const GameState = {
         this.gameInitialState.startingDialogueFlags.forEach(dialogueFlag => {
             this.setDialogueFlag(dialogueFlag);
         });
+
+        // Imposta voci journal iniziali
+        this.gameInitialState.startingJournalFlags.forEach(jFlag => {
+            this.setJournalFlag(jFlag);
+        });
         
         console.log("✨ Stato iniziale del gioco impostato");
     },
@@ -262,6 +302,7 @@ const GameState = {
         this.inventory = [];
         this.flags = {};
         this.dialogueFlags = {};
+        this.journalFlags = {};
         this.currentLocation = null;
         localStorage.removeItem(this.storageKey);
         this.updateInventoryInterface();
@@ -286,6 +327,7 @@ window.gameStateDebug = {
     showInventory: () => console.log("🎒 Inventario:", GameState.inventory),
     showFlags: () => console.log("🚩 Flag:", Object.keys(GameState.flags)),
     showDialogueFlags: () => console.log("💬 Dialoghi:", Object.keys(GameState.dialogueFlags)),
+    showJournalFlags: () => console.log("📖 Journal:", Object.keys(GameState.journalFlags)),
     addItem: (name) => GameState.addItem(name),
     removeItem: (name) => GameState.removeItem(name),
     setFlag: (name) => GameState.setFlag(name),
