@@ -151,6 +151,26 @@ body::before {
   box-shadow: 0 0 10px rgba(255, 0, 106, 0.5);
 }
 
+/* Stile dedicato al nuovo box testo affiancato all'immagine */
+#BoxTesto {
+  border: 2px solid #ff006a;
+  border-radius: 6px;
+  padding: 1vh;
+  overflow-y: auto;
+  background:
+    linear-gradient(135deg, rgba(0, 0, 0, 0.95) 0%, rgba(20, 0, 15, 0.98) 100%);
+  backdrop-filter: blur(5px);
+  font-size: 2.2vh;
+  line-height: 1.4;
+  color: #ffffff;
+  box-shadow:
+    0 0 15px rgba(255, 0, 106, 0.4),
+    inset 0 1px 0 rgba(255, 0, 106, 0.1);
+  text-shadow: 0 0 3px rgba(0, 255, 255, 0.3);
+  font-family: 'Orbitron', monospace;
+  letter-spacing: 0.5px;
+}
+
 /* ------------------------------------------------
    BARRA INFERIORE PER I PULSANTI AZIONE (".box-bottom")
    ------------------------------------------------ */
@@ -247,8 +267,8 @@ body::before {
   height: calc(100% - 10px);
   align-self: stretch;
   color: #ffffff;
-  width: calc(100vw - 15vw - 8vw - 8vh);
-  min-width: 400px;
+  width: calc((100vw - 15vw - 8vw - 8vh) / 2);
+  min-width: 200px;
   border: 3px solid #ffd700;
   border-radius: 10px;
   margin: 0 5px;
