@@ -68,6 +68,7 @@ const interactionButtons = [usaButton, guardaButton, prendiButton, parlaButton,
   let useFirstTarget = null;  // Primo oggetto scelto quando currentVerb === 'USA'
   let selectedButton = null;  // Riferimento al pulsante verbo attualmente selezionato
   let selectedTargets = [];   // Array dei pulsanti target selezionati
+  let isViewingItem = false;  // Stato se si sta visualizzando un oggetto
 
   // Controlla se il gioco è pronto (ha gameData caricato)
   function isGameReady() {
@@ -283,6 +284,58 @@ const interactionButtons = [usaButton, guardaButton, prendiButton, parlaButton,
     selectedTargets = [];
   }
 
+  // Disabilita tutti i pulsanti tranne "X"
+  function disableAllButtons() {
+    const buttons = document.querySelectorAll('button');
+    buttons.forEach(btn => {
+      btn.disabled = true;
+    });
+    cancelButton.disabled = false;
+  }
+
+  // Riabilita tutti i pulsanti
+  function enableAllButtons() {
+    const buttons = document.querySelectorAll('button');
+    buttons.forEach(btn => {
+      btn.disabled = false;
+    });
+  }
+
+  let previousImageSrc = '';
+
+  // Mostra l'immagine di un oggetto in primo piano
+  function showItemView(itemData) {
+    if (!itemData || !itemData.image || !sceneImage) return;
+
+    resetVerbState();
+
+    isViewingItem = true;
+    previousImageSrc = sceneImage.src;
+    sceneImage.src = itemData.image;
+    sceneImage.style.aspectRatio = '1 / 1';
+    sceneImage.style.objectFit = 'contain';
+    ContenutoPrincipale.classList.add('item-view');
+
+    disableAllButtons();
+    cancelButton.classList.remove('hidden');
+
+    if (itemData.description) {
+      showStatus(itemData.description);
+    }
+  }
+
+  function hideItemView() {
+    if (!isViewingItem) return;
+
+    isViewingItem = false;
+    enableAllButtons();
+    cancelButton.classList.add('hidden');
+    sceneImage.style.aspectRatio = '';
+    sceneImage.src = previousImageSrc || sceneImage.src;
+    ContenutoPrincipale.classList.remove('item-view');
+    loadScene();
+  }
+
   // Aggiorna volume su tutti gli elementi audio
   function setGlobalVolume(level) {
     const audios = document.querySelectorAll('audio');
@@ -430,9 +483,13 @@ const interactionButtons = [usaButton, guardaButton, prendiButton, parlaButton,
 
   // Listener per il pulsante "X" (annulla)
   cancelButton.addEventListener('click', () => {
-    resetVerbState();
-    const message = window.gameData?.systemMessages?.operationCancelled || "Operazione annullata.";
-    showStatus(message);
+    if (isViewingItem) {
+      hideItemView();
+    } else {
+      resetVerbState();
+      const message = window.gameData?.systemMessages?.operationCancelled || "Operazione annullata.";
+      showStatus(message);
+    }
   });
 
   // Gestione click sui target (POI a sinistra o oggetti inventario a destra)
@@ -499,13 +556,18 @@ const interactionButtons = [usaButton, guardaButton, prendiButton, parlaButton,
     // Se il verbo NON è "USA", evidenzia il target e gestisci combinazioni singole
     selectTarget(targetButton);
 
-    // Se l'azione è "GUARDA" e l'oggetto esiste nel database, mostra la sua descrizione
+    // Se "GUARDA" un oggetto dell'inventario, mostra l'immagine ingrandita
     if (currentVerb === 'GUARDA' && typeof window.getItem === 'function') {
       const itemData = window.getItem(targetText);
-      if (itemData && itemData.description) {
-        showStatus(itemData.description);
-        resetVerbState();
-        return;
+      if (itemData) {
+        if (targetButton.classList.contains('inventory-button')) {
+          showItemView(itemData);
+          return;
+        } else if (itemData.description) {
+          showStatus(itemData.description);
+          resetVerbState();
+          return;
+        }
       }
     }
 
