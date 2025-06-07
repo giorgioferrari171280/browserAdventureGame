@@ -21,6 +21,7 @@
   // Pulsanti di interazione
   const usaButton = document.getElementById('usaButton');
   const guardaButton = document.getElementById('guarda');
+  const vaiButton = document.getElementById('vai');
   const prendiButton = document.getElementById('prendi');
   const parlaButton = document.getElementById('parla');
   const saltaButton = document.getElementById('salta');
@@ -34,7 +35,7 @@
   const movementButtons = document.querySelectorAll('#movementGroup button');
   
   // Pulsanti di interazione (richiedono target)
-const interactionButtons = [usaButton, guardaButton, prendiButton, parlaButton,
+const interactionButtons = [vaiButton, usaButton, guardaButton, prendiButton, parlaButton,
                              saltaButton, leggiButton, spostaButton, indossaButton,
                              spingiButton, tiraButton];
 
@@ -47,6 +48,7 @@ const interactionButtons = [usaButton, guardaButton, prendiButton, parlaButton,
   // Pulsanti missioni e journal
   const questsBtn = document.getElementById('questsBtn');
   const journalBtn = document.getElementById('journalBtn');
+  const achievementsBtn = document.getElementById('achievementsBtn');
 
   // Overlay e pannelli
   const questsOverlay = document.getElementById('questsOverlay');
@@ -385,8 +387,8 @@ const interactionButtons = [usaButton, guardaButton, prendiButton, parlaButton,
       return;
     }
 
-    // Gestione speciale per "ESCI" dalla cella
-    if (buttonId === 'esci' && window.GameState) {
+    // Gestione speciale per "FUORI" dalla cella
+    if (buttonId === 'fuori' && window.GameState) {
       if (window.GameState.hasFlag('porta_aperta')) {
         if (window.LocationManager && window.LocationManager.currentLocationId) {
           await window.LocationManager.executeMovement('ESCAPE_DOOR');
@@ -443,6 +445,9 @@ const interactionButtons = [usaButton, guardaButton, prendiButton, parlaButton,
     
     // Imposta currentVerb in base all'id
     switch(verbId) {
+      case 'vai':
+        currentVerb = 'VAI';
+        break;
       case 'guarda':
         currentVerb = 'GUARDA';
         break;
@@ -510,7 +515,7 @@ const interactionButtons = [usaButton, guardaButton, prendiButton, parlaButton,
   });
 
   // Gestione click sui target (POI a sinistra o oggetti inventario a destra)
-  function onTargetClick(evt) {
+  async function onTargetClick(evt) {
     if (!currentVerb) return; // Se non c'è un verbo selezionato, ignora
     
     if (!isGameReady()) {
@@ -521,6 +526,8 @@ const interactionButtons = [usaButton, guardaButton, prendiButton, parlaButton,
 
     const targetText = evt.currentTarget.textContent.trim();
     const targetButton = evt.currentTarget;
+    const isDirection = targetButton.parentElement && targetButton.parentElement.id === 'movementGroup';
+    const targetKey = isDirection ? targetButton.id : targetText;
     
     // Se il verbo è "USA", dobbiamo gestire due fasi: primo e secondo target
     if (currentVerb === 'USA') {
@@ -573,6 +580,12 @@ const interactionButtons = [usaButton, guardaButton, prendiButton, parlaButton,
     // Se il verbo NON è "USA", evidenzia il target e gestisci combinazioni singole
     selectTarget(targetButton);
 
+    if (currentVerb === 'VAI' && isDirection) {
+      await onMovementClick(evt);
+      resetVerbState();
+      return;
+    }
+
     // Se "GUARDA" un oggetto dell'inventario, mostra l'immagine ingrandita
     if (currentVerb === 'GUARDA' && typeof window.getItem === 'function') {
       const itemData = window.getItem(targetText);
@@ -589,7 +602,7 @@ const interactionButtons = [usaButton, guardaButton, prendiButton, parlaButton,
     }
 
     // Cerca l'interazione nell'oggetto interactions
-    const interactionKey = `${currentVerb}_${targetText}`;
+    const interactionKey = `${currentVerb}_${targetKey}`;
     let response = '';
     
     if (window.gameData.interactions) {
@@ -908,9 +921,9 @@ const interactionButtons = [usaButton, guardaButton, prendiButton, parlaButton,
     journalText.textContent = entry.description || '';
   }
 
-  // Assegno i listener ai pulsanti di movimento (azioni immediate)
+  // I pulsanti di movimento agiscono come target per i verbi
   movementButtons.forEach(btn => {
-    btn.addEventListener('click', onMovementClick);
+    btn.addEventListener('click', onTargetClick);
   });
   
   // Assegno i listener ai pulsanti di interazione (richiedono target)
@@ -957,21 +970,20 @@ const interactionButtons = [usaButton, guardaButton, prendiButton, parlaButton,
   }
 
   const closeQuestsBtn = document.getElementById('closeQuestsBtn');
-  const achievementsOpenBtn = document.getElementById('achievementsOpenBtn');
-  const backToQuestsBtn = document.getElementById('backToQuestsBtn');
+  const closeAchievementsBtn = document.getElementById('closeAchievementsBtn');
   if (closeQuestsBtn) {
     closeQuestsBtn.addEventListener('click', () => {
       questsOverlay.style.display = 'none';
     });
   }
-  if (achievementsOpenBtn) {
-    achievementsOpenBtn.addEventListener('click', () => {
+  if (achievementsBtn) {
+    achievementsBtn.addEventListener('click', () => {
       updateAchievementsOverlay();
       achievementsOverlay.style.display = 'flex';
     });
   }
-  if (backToQuestsBtn) {
-    backToQuestsBtn.addEventListener('click', () => {
+  if (closeAchievementsBtn) {
+    closeAchievementsBtn.addEventListener('click', () => {
       achievementsOverlay.style.display = 'none';
     });
   }

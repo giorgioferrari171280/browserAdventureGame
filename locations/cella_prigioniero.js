@@ -16,16 +16,16 @@ window.currentLocationData = {
   ],
   initialInventory: [],
   // Messaggi associati ai pulsanti di movimento.
-  // "esci" diventa un vero movimento solo dopo aver sbloccato la porta
+  // "fuori" diventa un vero movimento solo dopo aver sbloccato la porta
   movements: {
     nord: 'A nord c\'è solo un muro di pietra.',
     sud: 'Le sbarre ti bloccano a sud.',
     ovest: 'Una parete umida impedisce il passaggio.',
     est: 'Vedi solo le vecchie catene sul muro.',
-    sali: 'Non c\'è alcuna scala da salire.',
-    scendi: 'Il pavimento è già il punto più basso.',
-    entra: 'Non c\'è nessun luogo dove entrare.',
-    esci: 'La porta è chiusa.',
+    sopra: 'Non c\'è alcuna scala da salire.',
+    sotto: 'Il pavimento è già il punto più basso.',
+    dentro: 'Non c\'è nessun luogo dove entrare.',
+    fuori: 'La porta è chiusa.',
     ESCAPE_DOOR: 'Apri con fatica la porta e ti ritrovi nel corridoio.',
     ESCAPE_TUNNEL: 'Strisci nel tunnel verso il giardino segreto.',
     ESCAPE_WINDOW: 'Le sbarre ti impediscono di uscire dalla finestra.',
@@ -46,10 +46,10 @@ window.currentLocationData = {
     'GUARDA_sud': 'A sud c\'è solo la parete umida della cella.',
     'GUARDA_est': 'Verso est noti le catene arrugginite fissate al muro.',
     'GUARDA_ovest': 'Oltre le sbarre a ovest non vedi nulla di interessante.',
-    'GUARDA_sali': 'Non c\'è nulla sopra di te.',
-    'GUARDA_scendi': 'Il pavimento di pietra è l\'unico appoggio.',
-    'GUARDA_entra': 'Non sembra ci sia un passaggio dove entrare.',
-    'GUARDA_esci': 'L\'unica via d\'uscita è la porta chiusa.',
+    'GUARDA_sopra': 'Non c\'è nulla sopra di te.',
+    'GUARDA_sotto': 'Il pavimento di pietra è l\'unico appoggio.',
+    'GUARDA_dentro': 'Non sembra ci sia un passaggio dove entrare.',
+    'GUARDA_fuori': 'L\'unica via d\'uscita è la porta chiusa.',
     // Usa la chiave trovata sotto il cuscino per sbloccare la porta
     'USA_Chiave_Porta': 'La chiave gira nella serratura con un clic.'
   },
