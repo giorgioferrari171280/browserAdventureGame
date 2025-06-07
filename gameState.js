@@ -21,6 +21,7 @@ const GameState = {
     // Location corrente
     currentLocation: null,
     visitedLocations: [],
+    completedQuests: [],
 
     // Informazioni sul salvataggio
     savedAt: null,
@@ -60,9 +61,8 @@ const GameState = {
             if (jFlag) {
                 this.setJournalFlag(jFlag);
             }
-            if (itemName === 'Chiave' && window.QuestManager) {
-                window.QuestManager.markTaskCompleted('main', 'fuga_castello', 0);
-            }
+            const slug = itemName.replace(/\s+/g, '_').toLowerCase();
+            this.setFlag(`item_${slug}`);
             this.updateInventoryInterface();
             this.saveToStorage();
             console.log(`📦 Aggiunto: ${itemName}`);
@@ -88,8 +88,8 @@ const GameState = {
     // ===== METODI FLAG =====
     setFlag(flagName) {
         this.flags[flagName] = true;
-        if (flagName === 'porta_aperta' && window.QuestManager) {
-            window.QuestManager.markTaskCompleted('main', 'fuga_castello', 1);
+        if (window.QuestManager) {
+            window.QuestManager.updateForFlag(flagName);
         }
         this.saveToStorage();
         console.log(`🚩 Flag impostato: ${flagName}`);
@@ -123,6 +123,7 @@ const GameState = {
     // ===== METODI FLAG DIALOGHI =====
     setDialogueFlag(dialogueId) {
         this.dialogueFlags[dialogueId] = true;
+        this.setFlag(dialogueId);
         this.saveToStorage();
         console.log(`💬 Dialogo segnato: ${dialogueId}`);
     },
@@ -141,8 +142,23 @@ const GameState = {
         this.currentLocation = locationId;
         if (!this.visitedLocations.includes(locationId)) {
             this.visitedLocations.push(locationId);
+            const flag = `visited_${locationId}`;
+            this.setFlag(flag);
+        } else {
+            const flag = `visited_${locationId}`;
+            if (!this.hasFlag(flag)) {
+                this.setFlag(flag);
+            }
         }
         this.saveToStorage();
+    },
+
+    addCompletedQuest(questId) {
+        if (!this.completedQuests.includes(questId)) {
+            this.completedQuests.push(questId);
+            this.setFlag(`quest_${questId}_completed`);
+            this.saveToStorage();
+        }
     },
 
     getDebugInfo() {
@@ -152,7 +168,8 @@ const GameState = {
             dialogueFlags: { ...this.dialogueFlags },
             journalFlags: { ...this.journalFlags },
             currentLocation: this.currentLocation,
-            visitedLocations: [...this.visitedLocations]
+            visitedLocations: [...this.visitedLocations],
+            completedQuests: [...this.completedQuests]
         };
     },
 
@@ -207,7 +224,8 @@ const GameState = {
             currentLocation: this.currentLocation,
             locationName: window.LocationManager?.locationConfig?.[this.currentLocation]?.name || this.locationName || this.currentLocation,
             savedAt: new Date().toISOString(),
-            saveName: this.saveName
+            saveName: this.saveName,
+            completedQuests: this.completedQuests
         };
 
         // Aggiorna proprietà locali
@@ -234,6 +252,7 @@ const GameState = {
                 this.locationName = data.locationName || null;
                 this.savedAt = data.savedAt || null;
                 this.saveName = data.saveName || this.saveName;
+                this.completedQuests = data.completedQuests || [];
                 console.log("📂 Stato caricato dal salvataggio");
                 return true;
             }
@@ -274,6 +293,9 @@ const GameState = {
         console.log("🚩 Flag:", Object.keys(this.flags));
         console.log("💬 Dialoghi affrontati:", Object.keys(this.dialogueFlags));
         console.log("📖 Journal:", Object.keys(this.journalFlags));
+        if (window.QuestManager) {
+            window.QuestManager.updateForFlag();
+        }
     },
     
     // Imposta stato iniziale del gioco (solo al primo avvio)
@@ -310,6 +332,7 @@ const GameState = {
         this.dialogueFlags = {};
         this.journalFlags = {};
         this.currentLocation = null;
+        this.completedQuests = [];
         localStorage.removeItem(this.storageKey);
         this.updateInventoryInterface();
         
