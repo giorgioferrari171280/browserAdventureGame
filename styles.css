@@ -1207,4 +1207,26 @@ button:not(.selected):not(.left-button):not(.inventory-button):not(.dialogue-opt
 .journal-column.details img { max-width: 100%; height: auto; margin-bottom: 1vh; }
 .journal-text { flex: 1; overflow-y: auto; }
 
+.quest-columns {
+  display: flex;
+  width: 100%;
+  height: 60vh;
+  gap: 1vh;
+  margin-bottom: 2vh;
+}
+
+.quest-column {
+  border: 1px solid #00ffff;
+  border-radius: 4px;
+  padding: 1vh;
+  overflow-y: auto;
+}
+
+.quest-column.categories { width: 25%; }
+.quest-column.quests { width: 25%; }
+.quest-column.details { width: 50%; }
+
+.quest-completed { color: #00ff00; }
+.quest-pending { color: #ff00ff; }
+
 

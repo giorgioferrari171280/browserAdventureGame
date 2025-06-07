@@ -52,8 +52,9 @@ const interactionButtons = [usaButton, guardaButton, prendiButton, parlaButton,
   const questsOverlay = document.getElementById('questsOverlay');
   const achievementsOverlay = document.getElementById('achievementsOverlay');
   const journalOverlay = document.getElementById('journalOverlay');
-  const mainQuestList = document.getElementById('mainQuestList');
-  const sideQuestList = document.getElementById('sideQuestList');
+  const questCategories = document.getElementById('questCategories');
+  const questList = document.getElementById('questList');
+  const questDetails = document.getElementById('questDetails');
   const achievementsGrid = document.getElementById('achievementsGrid');
   const journalCategories = document.getElementById('journalCategories');
   const journalEntries = document.getElementById('journalEntries');
@@ -792,37 +793,59 @@ const interactionButtons = [usaButton, guardaButton, prendiButton, parlaButton,
 
   // ====== QUESTS & JOURNAL UI ======
   function updateQuestOverlay() {
-    if (!mainQuestList || !sideQuestList) return;
-    mainQuestList.innerHTML = '';
-    sideQuestList.innerHTML = '';
-    const main = window.Quests?.main;
-    if (main) {
-      const title = document.createElement('h3');
-      title.textContent = main.name;
-      mainQuestList.appendChild(title);
-      const ul = document.createElement('ul');
-      main.tasks.forEach(t => {
-        const li = document.createElement('li');
-        li.textContent = (t.completed ? '[x] ' : '[ ] ') + t.description;
-        ul.appendChild(li);
-      });
-      mainQuestList.appendChild(ul);
-    }
-    (window.Quests?.sides || []).forEach(q => {
-      const wrapper = document.createElement('div');
-      const h = document.createElement('h4');
-      h.textContent = q.name;
-      wrapper.appendChild(h);
-      const ul = document.createElement('ul');
-      q.tasks.forEach(t => {
-        const li = document.createElement('li');
-        li.textContent = (t.completed ? '[x] ' : '[ ] ') + t.description;
-        ul.appendChild(li);
-      });
-      wrapper.appendChild(ul);
-      sideQuestList.appendChild(wrapper);
+    if (!questCategories || !questList || !questDetails) return;
+    questCategories.innerHTML = '';
+    questList.innerHTML = '';
+    questDetails.innerHTML = '';
+    const categories = { main: 'MAIN QUEST', sides: 'SIDE QUEST' };
+    Object.keys(categories).forEach(cat => {
+      const btn = document.createElement('button');
+      btn.className = 'inventory-button';
+      btn.textContent = categories[cat];
+      btn.addEventListener('click', () => loadQuestList(cat));
+      questCategories.appendChild(btn);
     });
   }
+
+  function loadQuestList(cat) {
+    questList.innerHTML = '';
+    questDetails.innerHTML = '';
+    const quests = cat === 'main' ? [window.Quests.main] : window.Quests.sides || [];
+    quests.forEach(q => {
+      const btn = document.createElement('button');
+      btn.className = 'inventory-button';
+      btn.textContent = q.name;
+      btn.addEventListener('click', () => showQuestDetails(cat, q.id));
+      questList.appendChild(btn);
+    });
+  }
+
+  function showQuestDetails(cat, questId) {
+    questDetails.innerHTML = '';
+    let quest = null;
+    if (cat === 'main' && window.Quests.main.id === questId) {
+      quest = window.Quests.main;
+    } else if (cat === 'sides') {
+      quest = (window.Quests.sides || []).find(q => q.id === questId);
+    }
+    if (!quest) return;
+    const h = document.createElement('h3');
+    h.textContent = quest.name;
+    questDetails.appendChild(h);
+    const ul = document.createElement('ul');
+    quest.tasks.forEach(t => {
+      const li = document.createElement('li');
+      li.textContent = t.description;
+      li.className = t.completed ? 'quest-completed' : 'quest-pending';
+      ul.appendChild(li);
+    });
+    questDetails.appendChild(ul);
+  }
+
+  // Rendi accessibili anche esternamente per il QuestManager
+  window.updateQuestOverlay = updateQuestOverlay;
+  window.loadQuestList = loadQuestList;
+  window.showQuestDetails = showQuestDetails;
 
   function updateAchievementsOverlay() {
     if (!achievementsGrid) return;
