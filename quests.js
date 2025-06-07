@@ -2,11 +2,13 @@ const Quests = {
     main: {
         id: 'fuga_castello',
         name: 'Fuga dal Castello',
+        achievementFlag: 'ach_fuga_castello',
         tasks: [
-            { description: 'Trova la chiave della cella', completed: false },
-            { description: 'Apri la cella', completed: false },
-            { description: 'Raggiungi il cortile', completed: false }
-        ]
+            { description: 'Trova la chiave della cella', flag: 'item_chiave', completed: false },
+            { description: 'Apri la cella', flag: 'porta_aperta', completed: false },
+            { description: 'Raggiungi il cortile', flag: 'visited_giardino_segreto', completed: false }
+        ],
+        completed: false
     },
     sides: []
 };
@@ -14,18 +16,33 @@ const Quests = {
 window.Quests = Quests;
 
 const QuestManager = {
-    markTaskCompleted(category, questId, taskIndex) {
-        let quest = null;
-        if (category === 'main' && Quests.main.id === questId) {
-            quest = Quests.main;
-        } else if (category === 'sides') {
-            quest = Quests.sides.find(q => q.id === questId);
+    updateForFlag(flagName) {
+        ['main', 'sides'].forEach(cat => {
+            const quests = cat === 'main' ? [Quests.main] : Quests.sides;
+            quests.forEach(q => {
+                q.tasks.forEach(t => {
+                    if (!t.completed && (!flagName || t.flag === flagName)) {
+                        if (window.GameState && window.GameState.hasFlag(t.flag)) {
+                            t.completed = true;
+                        }
+                    }
+                });
+                this.checkCompletion(q);
+            });
+        });
+        if (typeof window.updateQuestOverlay === 'function') {
+            window.updateQuestOverlay();
         }
-        if (!quest || !quest.tasks[taskIndex]) return;
-        if (!quest.tasks[taskIndex].completed) {
-            quest.tasks[taskIndex].completed = true;
-            if (typeof window.updateQuestOverlay === 'function') {
-                window.updateQuestOverlay();
+    },
+
+    checkCompletion(quest) {
+        if (!quest.completed && quest.tasks.every(t => t.completed)) {
+            quest.completed = true;
+            if (window.GameState) {
+                window.GameState.addCompletedQuest(quest.id);
+                if (quest.achievementFlag) {
+                    window.GameState.setFlag(quest.achievementFlag);
+                }
             }
         }
     }

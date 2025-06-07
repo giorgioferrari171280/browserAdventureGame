@@ -1044,7 +1044,8 @@ button:not(.selected):not(.left-button):not(.inventory-button):not(.dialogue-opt
 
 .dialogue-option-button {
   padding: 2vh 1vw;
-  font-size: clamp(14px, 2vh, 20px);
+  font-size: clamp(16px, 2.5vh, 24px);
+  font-weight: bold;
   font-family: 'Rajdhani', monospace;
   background: linear-gradient(145deg, rgba(0, 255, 100, 0.95) 0%, rgba(0, 150, 50, 0.9) 100%);
   border: 2px solid #00ff64;

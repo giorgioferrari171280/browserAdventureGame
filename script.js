@@ -869,7 +869,8 @@ const interactionButtons = [vaiButton, usaButton, guardaButton, prendiButton, pa
       const slot = document.createElement('div');
       slot.className = 'achievement-slot';
       const data = window.Achievements ? window.Achievements[ids[i]] : null;
-      if (data) {
+      const unlocked = data && (!data.flag || window.GameState?.hasFlag(data.flag));
+      if (unlocked) {
         if (data.image) {
           const img = document.createElement('img');
           img.src = data.image;
