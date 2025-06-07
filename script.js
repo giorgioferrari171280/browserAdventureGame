@@ -47,11 +47,20 @@ const interactionButtons = [usaButton, guardaButton, prendiButton, parlaButton,
   let volumeLevel = 1.0;
 
   function showTransition() {
-    if (transitionOverlay) transitionOverlay.style.display = 'block';
+    if (transitionOverlay) {
+      transitionOverlay.classList.remove('fade-out');
+      transitionOverlay.style.display = 'block';
+    }
   }
 
   function hideTransition() {
-    if (transitionOverlay) transitionOverlay.style.display = 'none';
+    if (transitionOverlay) {
+      transitionOverlay.classList.add('fade-out');
+      transitionOverlay.addEventListener('animationend', () => {
+        transitionOverlay.style.display = 'none';
+        transitionOverlay.classList.remove('fade-out');
+      }, { once: true });
+    }
   }
 
   let currentVerb = null;     // Verbo selezionato (e.g. "USA", "GUARDA")
@@ -747,7 +756,7 @@ const interactionButtons = [usaButton, guardaButton, prendiButton, parlaButton,
         } else {
           await window.LocationManager.initialize();
         }
-        hideTransition();
+        setTimeout(hideTransition, 100);
       } catch (error) {
         console.error("❌ Errore nell'inizializzazione LocationManager:", error);
         showStatus("❌ Errore nel caricamento del sistema multi-location", true);
@@ -759,7 +768,7 @@ const interactionButtons = [usaButton, guardaButton, prendiButton, parlaButton,
       if (!success) {
         showStatus("❌ Errore nell'inizializzazione del gioco singola location", true);
       }
-      hideTransition();
+      setTimeout(hideTransition, 100);
     } else {
       // Nessun dato disponibile
       console.warn("⚠️ Nessun sistema di gioco disponibile");
@@ -779,7 +788,7 @@ const interactionButtons = [usaButton, guardaButton, prendiButton, parlaButton,
           <p><small>Apri la console (F12) per maggiori dettagli.</small></p>
         `;
       }
-      hideTransition();
+      setTimeout(hideTransition, 100);
     }
   }
 

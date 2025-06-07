@@ -943,6 +943,11 @@ button:not(.selected):hover {
   animation: glitchAnimation 0.8s steps(2, end) infinite;
 }
 
+.transition-overlay.fade-out {
+  animation: glitchAnimation 0.8s steps(2, end) infinite,
+             glitchFadeOut 0.4s forwards;
+}
+
 @keyframes glitchAnimation {
   0% { clip-path: inset(0 0 90% 0); opacity: 0.8; }
   20% { clip-path: inset(10% 0 70% 0); }
@@ -950,6 +955,11 @@ button:not(.selected):hover {
   60% { clip-path: inset(30% 0 50% 0); }
   80% { clip-path: inset(40% 0 40% 0); }
   100% { clip-path: inset(50% 0 30% 0); opacity: 0.8; }
+}
+
+@keyframes glitchFadeOut {
+  from { opacity: 1; }
+  to   { opacity: 0; }
 }
 
 
