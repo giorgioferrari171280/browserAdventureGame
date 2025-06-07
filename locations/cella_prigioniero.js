@@ -6,51 +6,11 @@ window.currentLocationData = {
     image: 'assets/images/locations/cella.png'
   },
   pointsOfInterest: [
-    'Porta',
-    'Pagliericcio',
-    'Secchio',
-    'Finestra',
-    'Muro Nord',
-    'Muro Sud',
-    'Muro Est',
-    'Muro Ovest',
-    'Lanterna Spenta',
-    'Tavola Sconnessa',
-    // Nuovi punti di interesse
-    'Tappeto',
-    'Catena al Muro',
-    'Ciotola',
-    'Topolino',
-    'Grata sul Soffitto'
+    'Letto',
+    'Cuscino',
+    'Armadietto sul muro'
   ],
-  initialInventory: [
-    'Cucchiaio arrugginito',
-    'Straccio sporco',
-    'Pezzo di pane secco',
-    'Sassolino',
-    'Chiodo piegato',
-    'Lima',
-    'Corda',
-    'Candela',
-    'Lanterna',
-    'Mappa',
-    // Nuovi oggetti nell'inventario
-    'Spada',
-    'Scudo',
-    'Pozione',
-    'Martello',
-    'Pergamena',
-    'Tizzone ardente',
-    'Anello di ferro',
-    'Chiave arrugginita',
-    'Chiave del castello',
-    'Candelabro dorato',
-    'Penna di fenice',
-    'Calamaio magico',
-    'Pergamena incantata',
-    'Chiave della saggezza',
-    'Chiave del tempo'
-  ],
+  initialInventory: [],
   movements: {
     ESCAPE_DOOR: 'Apri con fatica la porta e ti ritrovi nel corridoio.',
     ESCAPE_TUNNEL: 'Strisci nel tunnel verso il giardino segreto.',
@@ -59,13 +19,14 @@ window.currentLocationData = {
     default: 'Non puoi andare in quella direzione.'
   },
   interactions: {
-    'GUARDA_Porta': 'La porta sembra robusta ma un po\' usurata.',
-    'SPOSTA_Pagliericcio': 'Hai trovato una chiave nascosta sotto la paglia!',
-    'USA_Chiave_Porta': 'La chiave gira nella serratura e si spezza ma ora la porta è aperta! Puoi uscire...'
+    'GUARDA_Letto': 'Il materasso è logoro. Tra le coperte intravedi qualcosa che luccica.',
+    'GUARDA_Cuscino': 'Un vecchio cuscino di paglia, ormai consumato.',
+    'GUARDA_Armadietto sul muro': 'Un piccolo armadietto fissato al muro, la porta è socchiusa.',
+    'SPOSTA_Cuscino': 'Spostando il cuscino salta fuori una piccola chiave.'
   },
   effects: {
-    'SPOSTA_Pagliericcio': { addItems: ['Chiave'] },
-    'USA_Chiave_Porta': { removeItems: ['Chiave'], setFlags: { porta_aperta: true } }
+    'SPOSTA_Cuscino': { addItems: ['Chiave'] },
+    'GUARDA_Letto': { addItems: ['Pistola Laser HF-27'] }
   },
   systemMessages: {
     verbSelected: 'Hai scelto {verb}.',
