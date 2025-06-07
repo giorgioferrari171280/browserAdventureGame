@@ -107,8 +107,11 @@
   <div id="questsOverlay" class="overlay-screen" style="display:none;">
     <div class="quest-window">
       <h2>QUESTS</h2>
-      <div id="mainQuestList"></div>
-      <div id="sideQuestList"></div>
+      <div class="quest-columns">
+        <div id="questCategories" class="quest-column categories"></div>
+        <div id="questList" class="quest-column quests"></div>
+        <div id="questDetails" class="quest-column details"></div>
+      </div>
       <button id="achievementsOpenBtn" class="inventory-button">ACHIEVEMENTS</button>
       <button id="closeQuestsBtn" class="inventory-button">INDIETRO</button>
     </div>

@@ -60,6 +60,9 @@ const GameState = {
             if (jFlag) {
                 this.setJournalFlag(jFlag);
             }
+            if (itemName === 'Chiave' && window.QuestManager) {
+                window.QuestManager.markTaskCompleted('main', 'fuga_castello', 0);
+            }
             this.updateInventoryInterface();
             this.saveToStorage();
             console.log(`📦 Aggiunto: ${itemName}`);
@@ -85,6 +88,9 @@ const GameState = {
     // ===== METODI FLAG =====
     setFlag(flagName) {
         this.flags[flagName] = true;
+        if (flagName === 'porta_aperta' && window.QuestManager) {
+            window.QuestManager.markTaskCompleted('main', 'fuga_castello', 1);
+        }
         this.saveToStorage();
         console.log(`🚩 Flag impostato: ${flagName}`);
     },
