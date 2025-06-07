@@ -15,7 +15,13 @@ window.currentLocationData = {
     'Muro Est',
     'Muro Ovest',
     'Lanterna Spenta',
-    'Tavola Sconnessa'
+    'Tavola Sconnessa',
+    // Nuovi punti di interesse
+    'Tappeto',
+    'Catena al Muro',
+    'Ciotola',
+    'Topolino',
+    'Grata sul Soffitto'
   ],
   initialInventory: [
     'Cucchiaio arrugginito',
@@ -27,7 +33,23 @@ window.currentLocationData = {
     'Corda',
     'Candela',
     'Lanterna',
-    'Mappa'
+    'Mappa',
+    // Nuovi oggetti nell'inventario
+    'Spada',
+    'Scudo',
+    'Pozione',
+    'Martello',
+    'Pergamena',
+    'Tizzone ardente',
+    'Anello di ferro',
+    'Chiave arrugginita',
+    'Chiave del castello',
+    'Candelabro dorato',
+    'Penna di fenice',
+    'Calamaio magico',
+    'Pergamena incantata',
+    'Chiave della saggezza',
+    'Chiave del tempo'
   ],
   movements: {
     ESCAPE_DOOR: 'Apri con fatica la porta e ti ritrovi nel corridoio.',
