@@ -130,12 +130,30 @@ const GameState = {
         
         // Pulisce inventario
         inventoryContainer.innerHTML = '';
-        
-        // Aggiunge pulsanti per ogni oggetto
+
+        // Aggiunge pulsanti per ogni oggetto con immagine e descrizione
         this.inventory.forEach(itemName => {
             const button = document.createElement('button');
             button.className = 'inventory-button';
-            button.textContent = itemName;
+
+            const itemData = typeof window.getItem === 'function' ? window.getItem(itemName) : null;
+
+            if (itemData && itemData.image) {
+                const img = document.createElement('img');
+                img.src = itemData.image;
+                img.alt = itemName;
+                img.className = 'inventory-icon';
+                button.appendChild(img);
+            }
+
+            const label = document.createElement('span');
+            label.textContent = itemName;
+            button.appendChild(label);
+
+            if (itemData && itemData.description) {
+                button.title = itemData.description;
+            }
+
             button.addEventListener('click', window.gameInterface?.onInventoryClick || (() => {}));
             inventoryContainer.appendChild(button);
         });
