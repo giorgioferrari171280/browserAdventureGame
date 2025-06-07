@@ -196,7 +196,7 @@ body::before {
   align-items: center;
   padding: 1vh;
   gap: 0.3vh;
-  background: 
+  background:
     linear-gradient(145deg, rgba(0, 0, 0, 0.8) 0%, rgba(20, 0, 10, 0.9) 100%);
   backdrop-filter: blur(8px);
   overflow: visible;
@@ -204,7 +204,7 @@ body::before {
   min-width: 100px;
   height: calc(100% - 10px);
   margin: 0 5px;
-  box-shadow: 
+  box-shadow:
     0 0 15px rgba(255, 61, 113, 0.3),
     inset 0 1px 0 rgba(255, 61, 113, 0.1);
 }
@@ -247,8 +247,10 @@ body::before {
 #InventoryList {
   display: flex;
   flex-direction: column;
-  align-items: center;
+  align-items: flex-start;
   width: 100%;
+  flex: 1;
+  overflow-y: auto;
 }
 
 .square {
@@ -277,13 +279,13 @@ body::before {
    STILE PER I PULSANTI NEL BOX SINISTRO (Points of Interest)
    ============================ */
 .left-button {
-  width: 90%;
+  width: 95%;
   padding: 1.2vh 0.8vh;
   font-size: clamp(12px, 1.6vh, 16px);
   font-family: 'Rajdhani', monospace;
   font-weight: 600;
   cursor: pointer;
-  margin: 0.4vh auto;
+  margin: 0.4vh 0;
   background: 
     linear-gradient(145deg, rgba(0, 20, 20, 0.95) 0%, rgba(0, 40, 40, 0.9) 100%);
   border: 1px solid #64ffda;
@@ -316,13 +318,13 @@ body::before {
    STILE PER L'INVENTARIO (box destro)
    ============================ */
 .inventory-button {
-  width: 90%;
+  width: 95%;
   padding: 1.2vh 0.8vh;
   font-size: clamp(12px, 1.6vh, 16px);
   font-family: 'Rajdhani', monospace;
   font-weight: 600;
   cursor: pointer;
-  margin: 0.4vh auto;
+  margin: 0.4vh 0;
   background: 
     linear-gradient(145deg, rgba(20, 0, 10, 0.95) 0%, rgba(40, 0, 20, 0.9) 100%);
   border: 1px solid #e91e63;
