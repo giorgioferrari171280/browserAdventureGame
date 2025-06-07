@@ -193,6 +193,7 @@ body::before {
   box-sizing: border-box;
   display: flex;
   flex-direction: column;
+  align-items: center;
   padding: 1vh;
   gap: 0.3vh;
   background: 
@@ -234,12 +235,20 @@ body::before {
   margin-right: 5px;
   margin-left: 5px;
   overflow-y: visible;
-  background: 
+  background:
     linear-gradient(145deg, rgba(0, 0, 0, 0.8) 0%, rgba(10, 0, 20, 0.9) 100%);
   border-color: #e91e63;
   box-shadow: 
     0 0 15px rgba(233, 30, 99, 0.3),
     inset 0 1px 0 rgba(233, 30, 99, 0.1);
+}
+
+#PoiList,
+#InventoryList {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
 }
 
 .square {
@@ -890,7 +899,7 @@ button:not(.selected):hover {
 }
 
 .dialogue-text-box {
-  flex: 1;
+  flex: 0 0 30%;
   border: 2px solid #ff006a;
   border-radius: 6px;
   padding: 1vh;
@@ -940,26 +949,12 @@ button:not(.selected):hover {
   background: #000;
   z-index: 3000;
   pointer-events: none;
-  animation: glitchAnimation 0.8s steps(2, end) infinite;
+  opacity: 1;
+  transition: opacity 0.4s ease;
 }
 
 .transition-overlay.fade-out {
-  animation: glitchAnimation 0.8s steps(2, end) infinite,
-             glitchFadeOut 0.4s forwards;
-}
-
-@keyframes glitchAnimation {
-  0% { clip-path: inset(0 0 90% 0); opacity: 0.8; }
-  20% { clip-path: inset(10% 0 70% 0); }
-  40% { clip-path: inset(20% 0 60% 0); }
-  60% { clip-path: inset(30% 0 50% 0); }
-  80% { clip-path: inset(40% 0 40% 0); }
-  100% { clip-path: inset(50% 0 30% 0); opacity: 0.8; }
-}
-
-@keyframes glitchFadeOut {
-  from { opacity: 1; }
-  to   { opacity: 0; }
+  opacity: 0;
 }
 
 
