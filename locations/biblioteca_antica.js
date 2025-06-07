@@ -8,7 +8,7 @@ window.currentLocationData = {
   pointsOfInterest: ['Scaffali', 'Leggio'],
   initialInventory: [],
   movements: {
-    vaiSud: 'Torna al corridoio del castello.',
+    sud: 'Torna al corridoio del castello.',
     default: 'Non puoi andare da quella parte.'
   },
   interactions: {},

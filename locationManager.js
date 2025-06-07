@@ -24,17 +24,17 @@ const LocationManager = {
             file: "locations/corridoio_castello.js", 
             name: "Corridoio del Castello",
             connections: {
-                "vaiSud": "cella_prigioniero",
-                "vaiNord": "biblioteca_antica",
-                "vaiEst": "sala_guardie",
-                "vaiOvest": "cucine_castello"
+                "sud": "cella_prigioniero",
+                "nord": "biblioteca_antica",
+                "est": "sala_guardie",
+                "ovest": "cucine_castello"
             }
         },
         "biblioteca_antica": {
             file: "locations/biblioteca_antica.js",
-            name: "Biblioteca Antica", 
+            name: "Biblioteca Antica",
             connections: {
-                "vaiSud": "corridoio_castello",
+                "sud": "corridoio_castello",
                 "sali": "torre_osservazione",
                 "DOOR_LIBRARIAN": "studio_bibliotecario"
             }
@@ -44,7 +44,7 @@ const LocationManager = {
             name: "Giardino Segreto",
             connections: {
                 "entra": "cella_prigioniero",
-                "vaiNord": "bosco_incantato",
+                "nord": "bosco_incantato",
                 "GATE_GARDEN": "borgo_vicino"
             }
         }
