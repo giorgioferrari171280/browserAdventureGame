@@ -3,7 +3,8 @@ window.currentLocationData = {
     id: 'biblioteca_antica',
     name: 'Biblioteca Antica',
     description: 'Scaffali colmi di tomi polverosi circondano la stanza.',
-    image: ''
+    image: '',
+    coordinates: 'A3'
   },
   pointsOfInterest: ['Scaffali', 'Leggio'],
   initialInventory: [],

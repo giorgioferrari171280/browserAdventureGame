@@ -69,6 +69,10 @@ const interactionButtons = [vaiButton, usaButton, guardaButton, prendiButton, pa
   const optionsVolumeSlider = document.getElementById('optionsVolumeSlider');
   const languageSelect = document.getElementById('languageSelect');
   const closeOptionsBtn = document.getElementById('closeOptionsBtn');
+  const mapBtn = document.getElementById('mapBtn');
+  const mapOverlay = document.getElementById('mapOverlay');
+  const mapGrid = document.getElementById('mapGrid');
+  const closeMapBtn = document.getElementById('closeMapBtn');
 
   let audioEnabled = true;
   let volumeLevel = 1.0;
@@ -132,8 +136,7 @@ const interactionButtons = [vaiButton, usaButton, guardaButton, prendiButton, pa
 
       // Imposta la location corrente nel GameState se disponibile
       if (window.GameState && window.gameData.locationInfo) {
-        window.GameState.currentLocation = window.gameData.locationInfo.id;
-        window.GameState.saveToStorage();
+        window.GameState.setCurrentLocation(window.gameData.locationInfo.id);
       }
       
       loadScene();
@@ -154,6 +157,7 @@ const interactionButtons = [vaiButton, usaButton, guardaButton, prendiButton, pa
       }
 
       console.log(`✅ Gioco inizializzato: ${window.gameData.locationInfo?.name || 'Sconosciuto'}`);
+      updateMapButtonState();
       return true; // Inizializzazione riuscita
     } catch (error) {
       console.error('❌ Errore nell\'inizializzazione del gioco:', error);
@@ -965,6 +969,71 @@ const interactionButtons = [vaiButton, usaButton, guardaButton, prendiButton, pa
     journalText.textContent = entry.description || '';
   }
 
+  function findLocationByCoord(coord) {
+    const cfg = window.LocationManager?.locationConfig || {};
+    for (const id in cfg) {
+      if (cfg[id].coordinates === coord) return id;
+    }
+    return null;
+  }
+
+  function updateMapOverlay() {
+    if (!mapGrid) return;
+    mapGrid.innerHTML = '';
+    const letters = 'ABCDEFGHIJKLMNOPQRST'.split('');
+    for (let r = 0; r <= 20; r++) {
+      for (let c = 0; c <= 20; c++) {
+        const cell = document.createElement('div');
+        if (r === 0 && c === 0) {
+          cell.className = 'map-label';
+        } else if (r === 0) {
+          cell.className = 'map-label';
+          cell.textContent = letters[c - 1];
+        } else if (c === 0) {
+          cell.className = 'map-label';
+          cell.textContent = r;
+        } else {
+          const coord = letters[c - 1] + r;
+          cell.className = 'map-cell';
+          const locId = findLocationByCoord(coord);
+          if (locId) {
+            if (window.GameState?.location_visitate[locId]) {
+              cell.classList.add('visited');
+              const data = window.LocationManager?.locations[locId]?.locationInfo;
+              if (data && data.image) {
+                const img = document.createElement('img');
+                img.src = data.image;
+                cell.appendChild(img);
+              }
+              const name = document.createElement('span');
+              name.textContent = data?.name || locId;
+              cell.appendChild(name);
+              cell.addEventListener('click', () => {
+                if (window.LocationManager) {
+                  window.LocationManager.changeLocation(locId);
+                  mapOverlay.style.display = 'none';
+                }
+              });
+            } else {
+              cell.textContent = '?';
+            }
+            if (locId === window.GameState?.currentLocation) {
+              cell.classList.add('current');
+            }
+          } else {
+            cell.textContent = '?';
+          }
+        }
+        mapGrid.appendChild(cell);
+      }
+    }
+  }
+
+  function updateMapButtonState() {
+    if (!mapBtn) return;
+    mapBtn.disabled = !!window.GameState?.flags?.map_disabled;
+  }
+
   // I pulsanti di movimento agiscono come target per i verbi
   movementButtons.forEach(btn => {
     btn.addEventListener('click', onTargetClick);
@@ -1009,6 +1078,7 @@ const interactionButtons = [vaiButton, usaButton, guardaButton, prendiButton, pa
   }
 
   updateAudioUI();
+  updateMapButtonState();
 
   if (closeOptionsBtn && optionsOverlay) {
     closeOptionsBtn.addEventListener('click', () => {
@@ -1056,6 +1126,18 @@ const interactionButtons = [vaiButton, usaButton, guardaButton, prendiButton, pa
   if (closeJournalBtn) {
     closeJournalBtn.addEventListener('click', () => {
       journalOverlay.style.display = 'none';
+    });
+  }
+
+  if (mapBtn && mapOverlay) {
+    mapBtn.addEventListener('click', () => {
+      updateMapOverlay();
+      mapOverlay.style.display = 'flex';
+    });
+  }
+  if (closeMapBtn) {
+    closeMapBtn.addEventListener('click', () => {
+      mapOverlay.style.display = 'none';
     });
   }
 

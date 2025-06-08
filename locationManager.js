@@ -14,6 +14,7 @@ const LocationManager = {
         "cella_prigioniero": {
             file: "locations/cella_prigioniero.js",
             name: "Cella del Prigioniero",
+            coordinates: "A1",
             connections: {
                 "ESCAPE_DOOR": "corridoio_castello",
                 "ESCAPE_TUNNEL": "giardino_segreto",
@@ -21,8 +22,9 @@ const LocationManager = {
             }
         },
         "corridoio_castello": {
-            file: "locations/corridoio_castello.js", 
+            file: "locations/corridoio_castello.js",
             name: "Corridoio del Castello",
+            coordinates: "A2",
             connections: {
                 "sud": "cella_prigioniero",
                 "nord": "biblioteca_antica",
@@ -33,6 +35,7 @@ const LocationManager = {
         "biblioteca_antica": {
             file: "locations/biblioteca_antica.js",
             name: "Biblioteca Antica",
+            coordinates: "A3",
             connections: {
                 "sud": "corridoio_castello",
                 "sopra": "torre_osservazione",
@@ -42,6 +45,7 @@ const LocationManager = {
         "giardino_segreto": {
             file: "locations/giardino_segreto.js",
             name: "Giardino Segreto",
+            coordinates: "B1",
             connections: {
                 "dentro": "cella_prigioniero",
                 "nord": "bosco_incantato",
@@ -125,6 +129,9 @@ const LocationManager = {
             this.currentLocationId = locationId;
             if (!this.gameState.visitedLocations.includes(locationId)) {
                 this.gameState.visitedLocations.push(locationId);
+            }
+            if (window.GameState) {
+                window.GameState.setCurrentLocation(locationId);
             }
             
             // Imposta i dati per il gioco
