@@ -13,6 +13,14 @@
     const loadGameBtn = document.getElementById('loadGameBtn');
     const backBtn = document.getElementById('backBtn');
     const quitBtn = document.getElementById('quitBtn');
+    const optionsBtn = document.getElementById('optionsBtn');
+    const optionsOverlay = document.getElementById('optionsOverlay');
+    const optionsAudioToggle = document.getElementById('optionsAudioToggle');
+    const optionsVolumeSlider = document.getElementById('optionsVolumeSlider');
+    const languageSelect = document.getElementById('languageSelect');
+    const closeOptionsBtn = document.getElementById('closeOptionsBtn');
+
+    let audioEnabled = true;
 
     const menuMusic = document.getElementById('menuMusic');
     if (menuMusic) {
@@ -193,4 +201,26 @@
     quitBtn.addEventListener('click', () => {
         window.location.href = 'https://www.google.com';
     });
+
+    if (optionsBtn) {
+        optionsBtn.addEventListener('click', () => {
+            if (optionsOverlay) {
+                optionsAudioToggle.checked = audioEnabled;
+                optionsVolumeSlider.value = menuMusic ? menuMusic.volume * 100 : 100;
+                languageSelect.value = localStorage.getItem('gameLanguage') || 'it';
+                optionsOverlay.style.display = 'flex';
+            }
+        });
+    }
+
+    if (closeOptionsBtn && optionsOverlay) {
+        closeOptionsBtn.addEventListener('click', () => {
+            audioEnabled = optionsAudioToggle.checked;
+            if (menuMusic) {
+                menuMusic.volume = (audioEnabled ? optionsVolumeSlider.value : 0) / 100;
+            }
+            localStorage.setItem('gameLanguage', languageSelect.value);
+            optionsOverlay.style.display = 'none';
+        });
+    }
 })();
