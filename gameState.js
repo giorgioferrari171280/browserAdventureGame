@@ -21,6 +21,7 @@ const GameState = {
     // Location corrente
     currentLocation: null,
     visitedLocations: [],
+    location_visitate: {},
     completedQuests: [],
 
     // Informazioni sul salvataggio
@@ -150,6 +151,7 @@ const GameState = {
                 this.setFlag(flag);
             }
         }
+        this.location_visitate[locationId] = true;
         this.saveToStorage();
     },
 
@@ -169,6 +171,7 @@ const GameState = {
             journalFlags: { ...this.journalFlags },
             currentLocation: this.currentLocation,
             visitedLocations: [...this.visitedLocations],
+            location_visitate: { ...this.location_visitate },
             completedQuests: [...this.completedQuests]
         };
     },
@@ -222,6 +225,8 @@ const GameState = {
             dialogueFlags: this.dialogueFlags,
             journalFlags: this.journalFlags,
             currentLocation: this.currentLocation,
+            visitedLocations: this.visitedLocations,
+            location_visitate: this.location_visitate,
             locationName: window.LocationManager?.locationConfig?.[this.currentLocation]?.name || this.locationName || this.currentLocation,
             savedAt: new Date().toISOString(),
             saveName: this.saveName,
@@ -249,6 +254,8 @@ const GameState = {
                 this.dialogueFlags = data.dialogueFlags || {};
                 this.journalFlags = data.journalFlags || {};
                 this.currentLocation = data.currentLocation || null;
+                this.visitedLocations = data.visitedLocations || [];
+                this.location_visitate = data.location_visitate || {};
                 this.locationName = data.locationName || null;
                 this.savedAt = data.savedAt || null;
                 this.saveName = data.saveName || this.saveName;
@@ -332,6 +339,8 @@ const GameState = {
         this.dialogueFlags = {};
         this.journalFlags = {};
         this.currentLocation = null;
+        this.visitedLocations = [];
+        this.location_visitate = {};
         this.completedQuests = [];
         localStorage.removeItem(this.storageKey);
         this.updateInventoryInterface();

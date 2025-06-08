@@ -3,7 +3,8 @@ window.currentLocationData = {
     id: 'cella_prigioniero',
     name: 'Cella del Prigioniero',
     description: 'Ti trovi in una piccola cella fredda e umida.',
-    image: 'assets/images/locations/cella.png'
+    image: 'assets/images/locations/cella.png',
+    coordinates: 'A1'
   },
   pointsOfInterest: [
     'Letto',

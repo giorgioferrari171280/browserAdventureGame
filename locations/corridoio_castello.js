@@ -3,7 +3,8 @@ window.currentLocationData = {
     id: 'corridoio_castello',
     name: 'Corridoio del Castello',
     description: 'Un lungo corridoio illuminato da torce.',
-    image: ''
+    image: '',
+    coordinates: 'A2'
   },
   pointsOfInterest: ['Porta Nord', 'Porta Est', 'Porta Ovest', 'Droide'],
   initialInventory: [],

@@ -1237,4 +1237,67 @@ button:not(.selected):not(.left-button):not(.inventory-button):not(.dialogue-opt
 .quest-completed { color: #00ff00; }
 .quest-pending { color: #ff00ff; }
 
+/* =================
+   MAP OVERLAY
+   ================= */
+.map-window {
+  background: linear-gradient(145deg, rgba(0, 0, 0, 0.9) 0%, rgba(10, 10, 30, 0.95) 100%);
+  border: 2px solid #00ffff;
+  border-radius: 8px;
+  padding: 1vh 1vw;
+  color: #ffffff;
+  width: 90vw;
+  height: 90vh;
+  max-width: 1000px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.map-grid-wrapper {
+  flex: 1;
+  width: 100%;
+  overflow: auto;
+}
+
+.map-grid {
+  display: grid;
+  grid-template-columns: repeat(21, 60px);
+  grid-auto-rows: 60px;
+}
+
+.map-cell, .map-label {
+  border: 1px solid #00ffff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.8rem;
+  color: #ffffff;
+}
+
+.map-cell {
+  background: rgba(0, 0, 0, 0.6);
+  cursor: pointer;
+}
+
+.map-cell.visited {
+  background: rgba(0, 80, 120, 0.6);
+}
+
+.map-cell.current {
+  outline: 3px solid #ffff00;
+}
+
+.map-cell img {
+  max-width: 50px;
+  max-height: 40px;
+  object-fit: cover;
+}
+
+.map-cell span {
+  display: block;
+  font-size: 0.6rem;
+  text-align: center;
+}
+
 

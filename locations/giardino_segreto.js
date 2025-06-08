@@ -3,7 +3,8 @@ window.currentLocationData = {
     id: 'giardino_segreto',
     name: 'Giardino Segreto',
     description: 'Un piccolo giardino nascosto tra le mura.',
-    image: ''
+    image: '',
+    coordinates: 'B1'
   },
   pointsOfInterest: ['Statua', 'Fontana'],
   initialInventory: [],
