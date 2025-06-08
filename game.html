@@ -62,6 +62,8 @@
         <button id="leggi">LEGGI</button>
         <button id="sposta">SPOSTA</button>
         <button id="indossa">INDOSSA</button>
+        <button id="apri">APRI</button>
+        <button id="chiudi">CHIUDI</button>
         <button id="spingi">SPINGI</button>
         <button id="tira">TIRA</button>
         <!-- Pulsante "X" speciale -->
@@ -140,6 +142,21 @@
         </div>
       </div>
       <button id="closeJournalBtn" class="inventory-button">INDIETRO</button>
+    </div>
+  </div>
+
+  <!-- ===== OPTIONS OVERLAY ===== -->
+  <div id="optionsOverlay" class="overlay-screen" style="display:none;">
+    <div class="options-window">
+      <h2>OPZIONI</h2>
+      <label><input type="checkbox" id="optionsAudioToggle"> AUDIO</label>
+      <input type="range" id="optionsVolumeSlider" min="0" max="100" value="100">
+      <label for="languageSelect">LINGUA</label>
+      <select id="languageSelect">
+        <option value="it">ITALIANO</option>
+        <option value="en">INGLESE</option>
+      </select>
+      <button id="closeOptionsBtn" class="inventory-button">CHIUDI</button>
     </div>
   </div>
 

@@ -30,6 +30,8 @@
   const indossaButton = document.getElementById('indossa');
   const spingiButton = document.getElementById('spingi');
   const tiraButton = document.getElementById('tira');
+  const apriButton = document.getElementById('apri');
+  const chiudiButton = document.getElementById('chiudi');
   
   // Pulsanti di movimento (azioni immediate)
   const movementButtons = document.querySelectorAll('#movementGroup button');
@@ -37,7 +39,7 @@
   // Pulsanti di interazione (richiedono target)
 const interactionButtons = [vaiButton, usaButton, guardaButton, prendiButton, parlaButton,
                              saltaButton, leggiButton, spostaButton, indossaButton,
-                             spingiButton, tiraButton];
+                             spingiButton, tiraButton, apriButton, chiudiButton];
 
   // Pulsanti speciali
   const mainMenuButton = document.getElementById('mainMenuBtn');
@@ -62,6 +64,11 @@ const interactionButtons = [vaiButton, usaButton, guardaButton, prendiButton, pa
   const journalEntries = document.getElementById('journalEntries');
   const journalImage = document.getElementById('journalImage');
   const journalText = document.getElementById('journalText');
+  const optionsOverlay = document.getElementById('optionsOverlay');
+  const optionsAudioToggle = document.getElementById('optionsAudioToggle');
+  const optionsVolumeSlider = document.getElementById('optionsVolumeSlider');
+  const languageSelect = document.getElementById('languageSelect');
+  const closeOptionsBtn = document.getElementById('closeOptionsBtn');
 
   let audioEnabled = true;
   let volumeLevel = 1.0;
@@ -89,6 +96,10 @@ const interactionButtons = [vaiButton, usaButton, guardaButton, prendiButton, pa
   let selectedButton = null;  // Riferimento al pulsante verbo attualmente selezionato
   let selectedTargets = [];   // Array dei pulsanti target selezionati
   let isViewingItem = false;  // Stato se si sta visualizzando un oggetto
+  let selectedQuestCategoryBtn = null;
+  let selectedQuestBtn = null;
+  let selectedJournalCategoryBtn = null;
+  let selectedJournalEntryBtn = null;
 
   // Controlla se il gioco è pronto (ha gameData caricato)
   function isGameReady() {
@@ -472,6 +483,12 @@ const interactionButtons = [vaiButton, usaButton, guardaButton, prendiButton, pa
       case 'indossa':
         currentVerb = 'INDOSSA';
         break;
+      case 'apri':
+        currentVerb = 'APRI';
+        break;
+      case 'chiudi':
+        currentVerb = 'CHIUDI';
+        break;
       case 'spingi':
         currentVerb = 'SPINGI';
         break;
@@ -810,12 +827,19 @@ const interactionButtons = [vaiButton, usaButton, guardaButton, prendiButton, pa
     questCategories.innerHTML = '';
     questList.innerHTML = '';
     questDetails.innerHTML = '';
+    selectedQuestCategoryBtn = null;
+    selectedQuestBtn = null;
     const categories = { main: 'MAIN QUEST', sides: 'SIDE QUEST' };
     Object.keys(categories).forEach(cat => {
       const btn = document.createElement('button');
       btn.className = 'inventory-button';
       btn.textContent = categories[cat];
-      btn.addEventListener('click', () => loadQuestList(cat));
+      btn.addEventListener('click', () => {
+        if (selectedQuestCategoryBtn) selectedQuestCategoryBtn.classList.remove('selected');
+        selectedQuestCategoryBtn = btn;
+        btn.classList.add('selected');
+        loadQuestList(cat);
+      });
       questCategories.appendChild(btn);
     });
   }
@@ -823,12 +847,18 @@ const interactionButtons = [vaiButton, usaButton, guardaButton, prendiButton, pa
   function loadQuestList(cat) {
     questList.innerHTML = '';
     questDetails.innerHTML = '';
+    selectedQuestBtn = null;
     const quests = cat === 'main' ? [window.Quests.main] : window.Quests.sides || [];
     quests.forEach(q => {
       const btn = document.createElement('button');
       btn.className = 'inventory-button';
       btn.textContent = q.name;
-      btn.addEventListener('click', () => showQuestDetails(cat, q.id));
+      btn.addEventListener('click', () => {
+        if (selectedQuestBtn) selectedQuestBtn.classList.remove('selected');
+        selectedQuestBtn = btn;
+        btn.classList.add('selected');
+        showQuestDetails(cat, q.id);
+      });
       questList.appendChild(btn);
     });
   }
@@ -890,12 +920,19 @@ const interactionButtons = [vaiButton, usaButton, guardaButton, prendiButton, pa
     journalEntries.innerHTML = '';
     journalImage.innerHTML = '';
     journalText.textContent = '';
+    selectedJournalCategoryBtn = null;
+    selectedJournalEntryBtn = null;
     const cats = window.JournalData?.categories || {};
     Object.keys(cats).forEach(catId => {
       const btn = document.createElement('button');
       btn.className = 'inventory-button';
       btn.textContent = cats[catId];
-      btn.addEventListener('click', () => loadJournalEntries(catId));
+      btn.addEventListener('click', () => {
+        if (selectedJournalCategoryBtn) selectedJournalCategoryBtn.classList.remove('selected');
+        selectedJournalCategoryBtn = btn;
+        btn.classList.add('selected');
+        loadJournalEntries(catId);
+      });
       journalCategories.appendChild(btn);
     });
   }
@@ -904,13 +941,19 @@ const interactionButtons = [vaiButton, usaButton, guardaButton, prendiButton, pa
     journalEntries.innerHTML = '';
     journalImage.innerHTML = '';
     journalText.textContent = '';
+    selectedJournalEntryBtn = null;
     const entries = window.JournalData?.entries[catId] || {};
     Object.keys(entries).forEach(eid => {
       if (!window.GameState?.hasJournalFlag(eid)) return;
       const btn = document.createElement('button');
       btn.className = 'inventory-button';
       btn.textContent = entries[eid].name;
-      btn.addEventListener('click', () => showJournalEntry(catId, eid));
+      btn.addEventListener('click', () => {
+        if (selectedJournalEntryBtn) selectedJournalEntryBtn.classList.remove('selected');
+        selectedJournalEntryBtn = btn;
+        btn.classList.add('selected');
+        showJournalEntry(catId, eid);
+      });
       journalEntries.appendChild(btn);
     });
   }
@@ -941,7 +984,12 @@ const interactionButtons = [vaiButton, usaButton, guardaButton, prendiButton, pa
 
   if (optionsMenuButton) {
     optionsMenuButton.addEventListener('click', () => {
-      Modal.alert('Funzione Opzioni non implementata');
+      if (optionsOverlay) {
+        optionsAudioToggle.checked = audioEnabled;
+        optionsVolumeSlider.value = volumeSlider.value;
+        languageSelect.value = localStorage.getItem('gameLanguage') || 'it';
+        optionsOverlay.style.display = 'flex';
+      }
     });
   }
 
@@ -961,6 +1009,16 @@ const interactionButtons = [vaiButton, usaButton, guardaButton, prendiButton, pa
   }
 
   updateAudioUI();
+
+  if (closeOptionsBtn && optionsOverlay) {
+    closeOptionsBtn.addEventListener('click', () => {
+      audioEnabled = optionsAudioToggle.checked;
+      volumeSlider.value = optionsVolumeSlider.value;
+      updateAudioUI();
+      localStorage.setItem('gameLanguage', languageSelect.value);
+      optionsOverlay.style.display = 'none';
+    });
+  }
 
   // Listener per schermate di quests e journal
   if (questsBtn && questsOverlay) {

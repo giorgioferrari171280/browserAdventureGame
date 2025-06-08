@@ -1147,7 +1147,8 @@ button:not(.selected):not(.left-button):not(.inventory-button):not(.dialogue-opt
 
 .quest-window,
 .achievements-window,
-.journal-window {
+.journal-window,
+.options-window {
   background: linear-gradient(145deg, rgba(0, 0, 0, 0.9) 0%, rgba(10, 10, 30, 0.95) 100%);
   border: 2px solid #00ffff;
   border-radius: 8px;
@@ -1161,6 +1162,12 @@ button:not(.selected):not(.left-button):not(.inventory-button):not(.dialogue-opt
   display: flex;
   flex-direction: column;
   align-items: center;
+}
+
+.options-window {
+  width: 50vw;
+  max-width: 400px;
+  gap: 1vh;
 }
 
 .achievements-grid {
