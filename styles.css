@@ -1300,4 +1300,37 @@ button:not(.selected):not(.left-button):not(.inventory-button):not(.dialogue-opt
   text-align: center;
 }
 
+/* ===== MAP PREVIEW ===== */
+.map-content {
+  display: flex;
+  width: 100%;
+  flex: 1;
+}
+
+.map-preview {
+  width: 220px;
+  padding-left: 1vw;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+}
+
+.map-preview img {
+  width: 200px;
+  height: 200px;
+  object-fit: cover;
+  border: 1px solid #00ffff;
+  margin-bottom: 1vh;
+}
+
+.language-select {
+  padding: 1vh;
+  font-size: 2vh;
+  border: 2px solid #00ffff;
+  border-radius: 4px;
+  background: rgba(0, 0, 0, 0.8);
+  color: #ffffff;
+}
+
 

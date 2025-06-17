@@ -5,6 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Adventure GUI Framework</title>
   <link rel="stylesheet" href="styles.css">
+  <script src="translations.js"></script>
 </head>
 <body>
 
@@ -13,7 +14,7 @@
     <div class="middle-content">
       <!-- Box sinistro - punti di interesse (popolato dinamicamente) -->
       <div class="side-box" id="MenuSinistro">
-        <h3 class="side-title">Points of interest</h3>
+        <h3 class="side-title" data-i18n="poi_title">Points of interest</h3>
         <div id="PoiList"></div>
       </div>
 
@@ -27,13 +28,13 @@
           <p><small>Se vedi questo messaggio, verifica che i file di gioco siano caricati correttamente.</small></p>
         </div>
       </div>
-      <div class="square" id="BoxTesto">
+      <div class="square" id="BoxTesto" data-i18n="welcome_msg">
         Benvenuto! Seleziona un'azione per iniziare l'avventura.
       </div>
 
       <!-- Box destro con inventario (popolato dinamicamente) -->
       <div class="side-box" id="MenuDestro">
-        <h3 class="side-title">Inventory</h3>
+        <h3 class="side-title" data-i18n="inventory_title">Inventory</h3>
         <div id="InventoryList"></div>
       </div>
     </div>
@@ -80,8 +81,8 @@
       </div>
 
   <div class="settings-panel">
-    <button id="mainMenuBtn">MAIN MENU</button>
-    <button id="optionsMenuBtn">OPZIONI</button>
+    <button id="mainMenuBtn" data-i18n="main_menu">MAIN MENU</button>
+    <button id="optionsMenuBtn" data-i18n="options">OPZIONI</button>
     <button id="audioToggle" aria-label="Audio">🔊</button>
     <input type="range" id="volumeSlider" min="0" max="100" value="100">
   </div>
@@ -111,29 +112,29 @@
   <!-- ===== QUESTS OVERLAY ===== -->
   <div id="questsOverlay" class="overlay-screen" style="display:none;">
     <div class="quest-window">
-      <h2>QUESTS</h2>
+      <h2 data-i18n="quests_title">QUESTS</h2>
       <div class="quest-columns">
         <div id="questCategories" class="quest-column categories"></div>
         <div id="questList" class="quest-column quests"></div>
         <div id="questDetails" class="quest-column details"></div>
       </div>
-      <button id="closeQuestsBtn" class="inventory-button">INDIETRO</button>
+      <button id="closeQuestsBtn" class="inventory-button" data-i18n="back">INDIETRO</button>
     </div>
   </div>
 
   <!-- ===== ACHIEVEMENTS OVERLAY ===== -->
   <div id="achievementsOverlay" class="overlay-screen" style="display:none;">
     <div class="achievements-window">
-      <h2>ACHIEVEMENTS</h2>
+      <h2 data-i18n="achievements_title">ACHIEVEMENTS</h2>
       <div id="achievementsGrid" class="achievements-grid"></div>
-      <button id="closeAchievementsBtn" class="inventory-button">INDIETRO</button>
+      <button id="closeAchievementsBtn" class="inventory-button" data-i18n="back">INDIETRO</button>
     </div>
   </div>
 
   <!-- ===== JOURNAL OVERLAY ===== -->
   <div id="journalOverlay" class="overlay-screen" style="display:none;">
     <div class="journal-window">
-      <h2>JOURNAL</h2>
+      <h2 data-i18n="journal_title">JOURNAL</h2>
       <div class="journal-columns">
         <div id="journalCategories" class="journal-column categories"></div>
         <div id="journalEntries" class="journal-column entries"></div>
@@ -142,33 +143,40 @@
           <div id="journalText" class="journal-text"></div>
         </div>
       </div>
-      <button id="closeJournalBtn" class="inventory-button">INDIETRO</button>
+      <button id="closeJournalBtn" class="inventory-button" data-i18n="back">INDIETRO</button>
     </div>
   </div>
 
   <!-- ===== MAP OVERLAY ===== -->
   <div id="mapOverlay" class="overlay-screen" style="display:none;">
     <div class="map-window">
-      <h2>MAPPA</h2>
-      <div class="map-grid-wrapper">
-        <div id="mapGrid" class="map-grid"></div>
+      <h2 data-i18n="map_title">MAPPA</h2>
+      <div class="map-content">
+        <div class="map-grid-wrapper">
+          <div id="mapGrid" class="map-grid"></div>
+        </div>
+        <div id="mapPreview" class="map-preview">
+          <img id="previewImage" src="" alt="preview" style="display:none;" />
+          <div id="previewName"></div>
+          <button id="goHereBtn" class="inventory-button" data-i18n="go_here" style="display:none;">VAI QUI</button>
+        </div>
       </div>
-      <button id="closeMapBtn" class="inventory-button">INDIETRO</button>
+      <button id="closeMapBtn" class="inventory-button" data-i18n="back">INDIETRO</button>
     </div>
   </div>
 
   <!-- ===== OPTIONS OVERLAY ===== -->
   <div id="optionsOverlay" class="overlay-screen" style="display:none;">
     <div class="options-window">
-      <h2>OPZIONI</h2>
-      <label><input type="checkbox" id="optionsAudioToggle"> AUDIO</label>
+      <h2 data-i18n="options">OPZIONI</h2>
+      <label><input type="checkbox" id="optionsAudioToggle"> <span data-i18n="audio">AUDIO</span></label>
       <input type="range" id="optionsVolumeSlider" min="0" max="100" value="100">
-      <label for="languageSelect">LINGUA</label>
-      <select id="languageSelect">
+      <label for="languageSelect" data-i18n="language">LINGUA</label>
+      <select id="languageSelect" class="language-select">
         <option value="it">ITALIANO</option>
         <option value="en">INGLESE</option>
       </select>
-      <button id="closeOptionsBtn" class="inventory-button">CHIUDI</button>
+      <button id="closeOptionsBtn" class="inventory-button" data-i18n="close">CHIUDI</button>
     </div>
   </div>
 
@@ -178,8 +186,8 @@
     <div class="modal-window">
       <div id="modalMessage"></div>
       <div class="modal-buttons">
-        <button id="modalOkBtn">OK</button>
-        <button id="modalCancelBtn">Annulla</button>
+        <button id="modalOkBtn" data-i18n="ok">OK</button>
+        <button id="modalCancelBtn" data-i18n="cancel">Annulla</button>
       </div>
     </div>
   </div>
