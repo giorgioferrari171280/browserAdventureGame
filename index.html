@@ -5,50 +5,51 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Adventure Game - Menu</title>
     <link rel="stylesheet" href="styles.css">
+    <script src="translations.js"></script>
 </head>
 <body class="menu-screen">
     <audio id="menuMusic" src="assets/music/main_menu_theme.mp3" loop></audio>
     <div id="mainMenu" class="menu-container">
         <div class="menu-buttons">
             <h1>Adventure Game</h1>
-            <button id="newGameBtn">Nuova Partita</button>
-            <button id="loadGameBtn">Carica Partita</button>
-            <button id="optionsBtn">Opzioni</button>
-            <button id="creditsBtn">Credits</button>
-            <button id="quitBtn">Esci dal Gioco</button>
+            <button id="newGameBtn" data-i18n="new_game">Nuova Partita</button>
+            <button id="loadGameBtn" data-i18n="load_game">Carica Partita</button>
+            <button id="optionsBtn" data-i18n="options">Opzioni</button>
+            <button id="creditsBtn" data-i18n="credits">Credits</button>
+            <button id="quitBtn" data-i18n="quit_game">Esci dal Gioco</button>
         </div>
     </div>
 
     <div id="loadScreen" class="menu-container" style="display:none;">
         <div class="menu-buttons">
-            <h1>Carica Partita</h1>
+            <h1 data-i18n="load_game">Carica Partita</h1>
             <div id="slotGrid" class="slot-grid"></div>
-            <button id="backBtn">Indietro</button>
+            <button id="backBtn" data-i18n="back">Indietro</button>
         </div>
     </div>
 
     <div id="newGameScreen" class="menu-container" style="display:none;">
         <div class="menu-buttons">
-            <h1>Nuova Partita</h1>
-            <input id="saveNameInput" class="save-name-input" type="text" placeholder="Nome salvataggio" />
+            <h1 data-i18n="new_game">Nuova Partita</h1>
+            <input id="saveNameInput" class="save-name-input" type="text" placeholder="Nome salvataggio" data-i18n-placeholder="save_name" />
             <div id="newSlotGrid" class="slot-grid"></div>
-            <button id="createGameBtn">Avvia</button>
-            <button id="cancelNewGameBtn">Annulla</button>
+            <button id="createGameBtn" data-i18n="start">Avvia</button>
+            <button id="cancelNewGameBtn" data-i18n="cancel">Annulla</button>
         </div>
     </div>
 
     <!-- ===== OPTIONS OVERLAY ===== -->
     <div id="optionsOverlay" class="overlay-screen" style="display:none;">
         <div class="options-window">
-            <h2>OPZIONI</h2>
-            <label><input type="checkbox" id="optionsAudioToggle"> AUDIO</label>
+            <h2 data-i18n="options">OPZIONI</h2>
+            <label><input type="checkbox" id="optionsAudioToggle"> <span data-i18n="audio">AUDIO</span></label>
             <input type="range" id="optionsVolumeSlider" min="0" max="100" value="100">
-            <label for="languageSelect">LINGUA</label>
-            <select id="languageSelect">
+            <label for="languageSelect" data-i18n="language">LINGUA</label>
+            <select id="languageSelect" class="language-select">
                 <option value="it">ITALIANO</option>
                 <option value="en">INGLESE</option>
             </select>
-            <button id="closeOptionsBtn" class="inventory-button">CHIUDI</button>
+            <button id="closeOptionsBtn" class="inventory-button" data-i18n="close">CHIUDI</button>
         </div>
     </div>
 
@@ -58,8 +59,8 @@
         <div class="modal-window">
             <div id="modalMessage"></div>
             <div class="modal-buttons">
-                <button id="modalOkBtn">OK</button>
-                <button id="modalCancelBtn">Annulla</button>
+                <button id="modalOkBtn" data-i18n="ok">OK</button>
+                <button id="modalCancelBtn" data-i18n="cancel">Annulla</button>
             </div>
         </div>
     </div>

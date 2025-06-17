@@ -73,6 +73,10 @@ const interactionButtons = [vaiButton, usaButton, guardaButton, prendiButton, pa
   const mapOverlay = document.getElementById('mapOverlay');
   const mapGrid = document.getElementById('mapGrid');
   const closeMapBtn = document.getElementById('closeMapBtn');
+  const mapPreview = document.getElementById('mapPreview');
+  const previewImage = document.getElementById('previewImage');
+  const previewName = document.getElementById('previewName');
+  const goHereBtn = document.getElementById('goHereBtn');
 
   let audioEnabled = true;
   let volumeLevel = 1.0;
@@ -980,6 +984,9 @@ const interactionButtons = [vaiButton, usaButton, guardaButton, prendiButton, pa
   function updateMapOverlay() {
     if (!mapGrid) return;
     mapGrid.innerHTML = '';
+    if (previewImage) previewImage.style.display = 'none';
+    if (goHereBtn) goHereBtn.style.display = 'none';
+    if (previewName) previewName.textContent = '';
     const letters = 'ABCDEFGHIJKLMNOPQRST'.split('');
     for (let r = 0; r <= 20; r++) {
       for (let c = 0; c <= 20; c++) {
@@ -1009,9 +1016,22 @@ const interactionButtons = [vaiButton, usaButton, guardaButton, prendiButton, pa
               name.textContent = data?.name || locId;
               cell.appendChild(name);
               cell.addEventListener('click', () => {
-                if (window.LocationManager) {
-                  window.LocationManager.changeLocation(locId);
-                  mapOverlay.style.display = 'none';
+                const info = window.LocationManager?.locations[locId]?.locationInfo;
+                if (info) {
+                  if (previewImage) {
+                    previewImage.src = info.image || '';
+                    previewImage.style.display = info.image ? 'block' : 'none';
+                  }
+                  if (previewName) previewName.textContent = info.name || locId;
+                  if (goHereBtn) {
+                    goHereBtn.style.display = 'block';
+                    goHereBtn.onclick = () => {
+                      if (window.LocationManager) {
+                        window.LocationManager.changeLocation(locId);
+                        mapOverlay.style.display = 'none';
+                      }
+                    };
+                  }
                 }
               });
             } else {
@@ -1056,7 +1076,7 @@ const interactionButtons = [vaiButton, usaButton, guardaButton, prendiButton, pa
       if (optionsOverlay) {
         optionsAudioToggle.checked = audioEnabled;
         optionsVolumeSlider.value = volumeSlider.value;
-        languageSelect.value = localStorage.getItem('gameLanguage') || 'it';
+        languageSelect.value = LanguageManager.current;
         optionsOverlay.style.display = 'flex';
       }
     });
@@ -1085,7 +1105,7 @@ const interactionButtons = [vaiButton, usaButton, guardaButton, prendiButton, pa
       audioEnabled = optionsAudioToggle.checked;
       volumeSlider.value = optionsVolumeSlider.value;
       updateAudioUI();
-      localStorage.setItem('gameLanguage', languageSelect.value);
+      LanguageManager.set(languageSelect.value);
       optionsOverlay.style.display = 'none';
     });
   }
@@ -1132,6 +1152,9 @@ const interactionButtons = [vaiButton, usaButton, guardaButton, prendiButton, pa
   if (mapBtn && mapOverlay) {
     mapBtn.addEventListener('click', () => {
       updateMapOverlay();
+      if (previewImage) previewImage.style.display = 'none';
+      if (goHereBtn) goHereBtn.style.display = 'none';
+      if (previewName) previewName.textContent = '';
       mapOverlay.style.display = 'flex';
     });
   }

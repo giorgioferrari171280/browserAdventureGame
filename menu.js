@@ -207,7 +207,7 @@
             if (optionsOverlay) {
                 optionsAudioToggle.checked = audioEnabled;
                 optionsVolumeSlider.value = menuMusic ? menuMusic.volume * 100 : 100;
-                languageSelect.value = localStorage.getItem('gameLanguage') || 'it';
+                languageSelect.value = LanguageManager.current;
                 optionsOverlay.style.display = 'flex';
             }
         });
@@ -219,7 +219,7 @@
             if (menuMusic) {
                 menuMusic.volume = (audioEnabled ? optionsVolumeSlider.value : 0) / 100;
             }
-            localStorage.setItem('gameLanguage', languageSelect.value);
+            LanguageManager.set(languageSelect.value);
             optionsOverlay.style.display = 'none';
         });
     }
